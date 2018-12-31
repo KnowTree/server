@@ -44,7 +44,7 @@ public class Node extends CanBeStoredObject {
     }
 
     public Node update() {
-        if (!this.hasId()) {
+        if (this.hasId()) {
             String query = Neo4JQueryFactory.getInstance().updateNodeQuery(this);
             List<Record> records = Neo4JController.getInstance().execute(query);
             this.fromRecord((Record)records.get(0));
@@ -55,7 +55,7 @@ public class Node extends CanBeStoredObject {
     }
 
     public Node delete() {
-        if (!this.hasId()) {
+        if (this.hasId()) {
             String query = Neo4JQueryFactory.getInstance().deleteNodeQuery(this);
             List<Record> records = Neo4JController.getInstance().execute(query);
             this.fromRecord((Record)records.get(0));

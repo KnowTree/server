@@ -57,10 +57,14 @@ public class Relationship extends CanBeStoredObject {
     }
 
     public CanBeStored get(long id) {
-        String q = Neo4JQueryFactory.getInstance().getRelationshipQuery(id);
-        List<Record> records = Neo4JController.getInstance().execute(q);
-        if (records.size() > 0) {
-            this.fromRecord((Record) records.get(0));
+        if (this.hasId()) {
+            String q = Neo4JQueryFactory.getInstance().getRelationshipQuery(id);
+            List<Record> records = Neo4JController.getInstance().execute(q);
+            if (records.size() > 0) {
+                this.fromRecord((Record) records.get(0));
+            }
+        } else {
+            throw new Error("Cannot update relationship without id");
         }
         return this;
     }

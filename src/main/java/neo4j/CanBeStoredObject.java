@@ -19,7 +19,11 @@ public abstract class CanBeStoredObject implements CanBeStored {
     Long id;
     Map<String, Property> properties;
 
+    LongProperty idProp = new LongProperty("neo_id");
+
     public static final String KIND_DELIMITER = "@";
+    public static final String PROPERTY_START = "{";
+    public static final String PROPERTY_END = "}";
 
     public CanBeStoredObject(String kind) {
         this.properties = new HashMap<>();
@@ -56,6 +60,7 @@ public abstract class CanBeStoredObject implements CanBeStored {
     public CanBeStoredObject fromRecord(Record record) {
         Entity entity = toEntity(record);
         this.id = entity.id();
+        property(idProp.setValue(this.id));
         Iterable<String> keys = entity.keys();
         keys.forEach((s) -> {
             Value value = entity.get(s);
@@ -65,7 +70,7 @@ public abstract class CanBeStoredObject implements CanBeStored {
             } else if (value instanceof BooleanValue) {
                 property = (new BooleanProperty(s)).setValue(value.asBoolean());
             } else if (value instanceof FloatValue) {
-                property = (new FloatProperty(s)).setValue(value.asFloat());
+                property = (new DoubleProperty(s)).setValue(value.asDouble());
             } else if (value instanceof IntegerValue) {
                 property = (new IntegerProperty(s)).setValue(value.asInt());
             } else if (value instanceof NullValue) {
@@ -88,10 +93,17 @@ public abstract class CanBeStoredObject implements CanBeStored {
 
     public CanBeStoredObject fromString(String raw) {
         Gson gson = new Gson();
-        Type gsonType = new TypeToken<HashMap<String, Object>>() {
-        }.getType();
+        Type gsonType = new TypeToken<HashMap<String, Object>>() {}.getType();
+        if (raw == null || raw.isEmpty()) {
+            raw = PROPERTY_START + PROPERTY_END;
+        }
         Map<String, Object> props = gson.fromJson(raw, gsonType);
-        return fromMap(props);
+        if (props != null) {
+            return fromMap(props);
+        } else {
+            log.warning("Cannot parse props from " + raw);
+            return this;
+        }
 
     }
 
@@ -101,8 +113,8 @@ public abstract class CanBeStoredObject implements CanBeStored {
             Property p = null;
             if (value instanceof String) {
                 p = new StringProperty(key).setValue((String) value);
-            } else if (value instanceof Float) {
-                p = new FloatProperty(key).setValue((Float) value);
+            } else if (value instanceof Float || value instanceof Double) {
+                p = new DoubleProperty(key).setValue((Double) value);
 
             } else if (value instanceof Integer) {
                 p = new IntegerProperty(key).setValue((Integer) value);

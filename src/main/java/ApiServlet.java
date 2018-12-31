@@ -58,6 +58,7 @@ public class ApiServlet extends HttpServlet {
                     Node fromNode = new Node(from);
                     Node toNode = new Node(to);
                     Relationship relationship = new Relationship(apiFormat.getKind(), fromNode, toNode);
+                    relationship.fromString(apiFormat.getPayload());
                     relationship.create();
                     resp.getWriter().write(relationship.toString());
                 }

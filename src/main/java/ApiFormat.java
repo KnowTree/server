@@ -32,7 +32,7 @@ public class ApiFormat {
 
         this.method = request.getMethod();
 
-        if (uriParts.size() == 5) {
+        if (uriParts.size() >=4) {
             version = uriParts.get(1);
             String type = uriParts.get(2);
             switch (type) {
@@ -46,9 +46,12 @@ public class ApiFormat {
                     error = INVALID_FORMAT;
             }
             kind = uriParts.get(3);
-            id = Long.valueOf(uriParts.get(4));
         } else {
             this.error = INVALID_FORMAT;
+        }
+
+        if (uriParts.size() == 5) {
+            id = Long.valueOf(uriParts.get(4));
         }
 
         if (method.equals("POST") || method.equals("PUT")) {
@@ -59,8 +62,6 @@ public class ApiFormat {
                 e.printStackTrace();
             }
         }
-
-
 
     }
 
