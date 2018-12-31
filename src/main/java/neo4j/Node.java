@@ -25,6 +25,11 @@ public class Node extends CanBeStoredObject {
         super(kind, id);
     }
 
+    @Override
+    public Entity toEntity(Record record) {
+        return record.get("n").asEntity();
+    }
+
     public Node create() {
         if (this.hasId()) {
             throw new Error("Cannot create existing node id = " + this.id);

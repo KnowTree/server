@@ -54,7 +54,7 @@ public abstract class CanBeStoredObject implements CanBeStored {
     }
 
     public CanBeStoredObject fromRecord(Record record) {
-        Entity entity = record.get("n").asEntity();
+        Entity entity = toEntity(record);
         this.id = entity.id();
         Iterable<String> keys = entity.keys();
         keys.forEach((s) -> {
@@ -83,6 +83,8 @@ public abstract class CanBeStoredObject implements CanBeStored {
         });
         return this;
     }
+
+    public abstract Entity toEntity(Record record);
 
     public CanBeStoredObject fromString(String raw) {
         Gson gson = new Gson();
