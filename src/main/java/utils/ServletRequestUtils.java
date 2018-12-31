@@ -23,4 +23,9 @@ public class ServletRequestUtils {
 
         return list;
     }
+
+    public static String getParameter(HttpServletRequest req, String name) {
+        String raw = req.getParameter(name);
+        return raw == null || raw.isEmpty() ? null : raw;
+    }
 }

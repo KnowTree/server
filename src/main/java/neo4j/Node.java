@@ -14,64 +14,15 @@ import org.neo4j.driver.v1.Record;
 import org.neo4j.driver.v1.Value;
 import org.neo4j.driver.v1.types.Entity;
 
-public class Node implements CanBeStored {
-    private static final Logger log = Logger.getLogger(Node.class.getName());
-    String kind;
-    Long id;
-    Map<String, Property> properties;
+public class Node extends CanBeStoredObject {
+
 
     public Node(String kind) {
-        this.properties = new HashMap();
-        this.kind = kind;
+        super(kind);
     }
 
     public Node(String kind, long id) {
-        this(kind);
-        this.get(id);
-    }
-
-    public Node property(Property property) {
-        this.properties.put(property.key, property);
-        return this;
-    }
-
-    public Property property(String name) {
-        return (Property)this.properties.get(name);
-    }
-
-    public Node fromRecord(Record record) {
-        Entity entity = record.get("n").asEntity();
-        this.id = entity.id();
-        Iterable<String> keys = entity.keys();
-        keys.forEach((s) -> {
-            Value value = entity.get(s);
-            Property property = null;
-            if (value instanceof StringValue) {
-                property = (new StringProperty(s)).setValue(value.asString());
-            } else if (value instanceof BooleanValue) {
-                property = (new BooleanProperty(s)).setValue(value.asBoolean());
-            } else if (value instanceof FloatValue) {
-                property = (new FloatProperty(s)).setValue(value.asFloat());
-            } else if (value instanceof IntegerValue) {
-                property = (new IntegerProperty(s)).setValue(value.asInt());
-            } else if (value instanceof NullValue) {
-                property = (new StringProperty(s)).setValue(null);
-            } else if (value instanceof ListValue) {
-                property = (new ListProperty(s)).setValue(value.asList());
-            }
-
-            if (property != null) {
-                this.property(property);
-            } else {
-                log.warning("Cannot update property " + s + " with value " + value.toString());
-            }
-
-        });
-        return this;
-    }
-
-    public boolean hasId() {
-        return this.id != null;
+        super(kind, id);
     }
 
     public Node create() {
@@ -120,7 +71,4 @@ public class Node implements CanBeStored {
         }
     }
 
-    public String toString() {
-        return Neo4JQueryFactory.getPropertyJSON(this.properties);
-    }
 }

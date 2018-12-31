@@ -7,5 +7,5 @@ public interface CanBeStored {
 
     CanBeStored delete();
 
-    CanBeStored get(long var1);
+    CanBeStored get(long id);
 }
