@@ -34,6 +34,7 @@
         <url-pattern>/ErrorHandler</url-pattern>
     </servlet-mapping>
 
+
     <error-page>
         <exception-type>java.io.Exception</exception-type >
         <location>/ErrorHandler</location>
