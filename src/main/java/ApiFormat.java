@@ -1,12 +1,7 @@
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import org.apache.commons.io.IOUtils;
 import utils.ServletRequestUtils;
 
@@ -16,7 +11,7 @@ public class ApiFormat {
     private String kind;
     private String method;
     private Long id;
-    private EntityType entityType;
+    private ApiType apiType;
     private String payload;
     final String INVALID_FORMAT = "Invalid format";
 
@@ -37,10 +32,10 @@ public class ApiFormat {
             String type = uriParts.get(2);
             switch (type) {
                 case "n" :
-                    entityType = EntityType.Node;
+                    apiType = ApiType.Node;
                     break;
                 case "r" :
-                    entityType = EntityType.Relationship;
+                    apiType = ApiType.Relationship;
                     break;
                 default :
                     error = INVALID_FORMAT;
@@ -85,8 +80,8 @@ public class ApiFormat {
         return this.error;
     }
 
-    public EntityType getEntityType() {
-        return entityType;
+    public ApiType getApiType() {
+        return apiType;
     }
 
     public String getPayload() {
@@ -98,10 +93,10 @@ public class ApiFormat {
     }
 
     public boolean isRelationship() {
-        return EntityType.Relationship == entityType;
+        return ApiType.Relationship == apiType;
     }
 
-    enum EntityType {
+    enum ApiType {
         Node, Relationship
     }
 }

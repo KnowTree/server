@@ -25,7 +25,7 @@ public class ApiServlet extends HttpServlet {
             node.get(apiFormat.getId());
             resp.getWriter().write(node.toString());
         } else {
-            resp.sendError(this.ERROR_CODE, apiFormat.getError());
+            resp.getWriter().write(ErrorHandler.createErrorMessage(apiFormat.getError()));
         }
 
     }
@@ -42,7 +42,7 @@ public class ApiServlet extends HttpServlet {
             resp.getWriter().write(entity.toString());
 
         } else {
-            resp.sendError(this.ERROR_CODE, apiFormat.getError());
+            resp.getWriter().write(ErrorHandler.createErrorMessage(apiFormat.getError()));
         }
     }
 
@@ -69,7 +69,7 @@ public class ApiServlet extends HttpServlet {
                 resp.getWriter().write(entity.toString());
             }
         } else {
-            resp.sendError(this.ERROR_CODE, apiFormat.getError());
+            resp.getWriter().write(ErrorHandler.createErrorMessage(apiFormat.getError()));
         }
     }
 
@@ -83,7 +83,7 @@ public class ApiServlet extends HttpServlet {
             node.delete();
             resp.getWriter().write(node.toString());
         } else {
-            resp.sendError(this.ERROR_CODE, apiFormat.getError());
+            resp.getWriter().write(ErrorHandler.createErrorMessage(apiFormat.getError()));
         }
     }
 

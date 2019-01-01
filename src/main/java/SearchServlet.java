@@ -1,18 +1,18 @@
-import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
-public class ErrorHandler extends HttpServlet {
-    public ErrorHandler() {
-    }
+public class SearchServlet extends HttpServlet {
 
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getWriter().write("Error");
+        super.doGet(req, resp);
     }
 
-    public static String createErrorMessage(String msg) {
-        return "{ error : \"" + msg + "\"}";
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doPost(req, resp);
     }
 }
