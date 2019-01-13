@@ -1,8 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import style from './Style.css';
-const Index = () => {
-    return <div className={style.a}>Hello React Blue!</div>;
-};
+import Dashboard from "./Dashboard";
 
-ReactDOM.render(<Index />, document.getElementById("index"));
+ReactDOM.render(<Dashboard/>, document.getElementById("index"));
