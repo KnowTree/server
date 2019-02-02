@@ -1,0 +1,47 @@
+This file describes main pupose of KnowTree application
+
+Definations :
+- Knowledge : Any thing that help people know something includes tutorials, discussions, analytics, reports, philosophies, advises, books, etc in any format
+- Knowledge node (aka k-node) : A entity presenting a knowledge stored in system. They're categorized and linked together to produce a mind map
+- Relationship : the link name between k-nodes. Relationships mainly are the order of reading.
+- Client : person who use this tool
+- Admin : person who manage & configure this system
+- System : refer to our application and it's back end
+- Group : can be a subject, branch, a team or company
+
+
+I. Main idea
+People don't know what they don;t know. It will be great if we can show them what they don't know based on what they already know.
+- Provide mind map tool for people to organize their knowledge
+- Auto send "next thing to know" to user from what they already read => daily learning courses
+- Knowledge can be collected from other resources such as websites, blogs, video , etc
+- Each knowledge must be categorized and labelized and put in relationship with the other, to build a mindmap.
+Contributor have main role in constructing this mind map.
+- Allow scoping. Knowledge can be configured to be shared in groups or people
+- Allow user to submit their concern and notify professional one to contribute
+- Each knowledge usually have many resources, we let reader rating them.
+- Engage user by show them their knowledge coverage and regularly test them or remind them ?
+- Engage user to summarize knowledge ?
+
+II. Usage specifications
+
+II.1 Client
+    - Client login by OAuth
+    - Client can add his own knowledge
+    - Client add k-node using a form : title, description, summary, link, group, labels
+    - Client can join in many groups. Each group is a mind map.
+     Each group must define who can contribute knowledge. Client can add / edit if have approriate permissions
+    - Client can click on each knowledge node to be redirected to original posts. It is better if we show content in our own app
+    - Client can search knowledge by categories
+    - Client should have a browser plugin to contribute easily.
+    Exp When they are reading a post or watching a video and they feel it is useful, they can easily add to our system by using browser plugin.
+    - Client who contribute a node, can prepare questions to help test whether other readers already absorded this knowledge
+    - Client was received info, fact, question every day based on knowledge contributed. So that every one can know things other share by some day
+    - Client can configure how often they receive new knowledge. This can cost money. :)
+    - Client have some k-point for each thing / rating they contribute. This can be use as money in system.
+
+II.2 Admin
+
+II.3 System
+    - Based on tests client contribute, system send questions / fact / tests to client to engage them.
+    - Client do tests each test map to a knowledge. Client can go to knowledge resource to read if they dont\'t know answer
