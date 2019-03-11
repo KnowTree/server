@@ -4,16 +4,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import neo4j.CanBeStored;
 import neo4j.CanBeStoredObject;
 import neo4j.Node;
 import neo4j.Relationship;
 import utils.ServletRequestUtils;
-
+/*
+    Direct alter database, should only access via root permission
+ */
 public class ApiServlet extends HttpServlet {
     private int ERROR_CODE = 400;
 
     public ApiServlet() {
+        super();
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -22,7 +24,7 @@ public class ApiServlet extends HttpServlet {
             CanBeStoredObject node = apiFormat.isRelationship() ?
                     new Relationship(apiFormat.getKind()) :
                     new Node(apiFormat.getKind());
-            node.get(apiFormat.getId());
+            node.get(apiFormat.getEntityKey());
             resp.getWriter().write(node.toString());
         } else {
             resp.getWriter().write(ErrorHandler.createErrorMessage(apiFormat.getError()));
@@ -36,7 +38,7 @@ public class ApiServlet extends HttpServlet {
             CanBeStoredObject entity = apiFormat.isRelationship() ?
                     new Relationship(apiFormat.getKind()) :
                     new Node(apiFormat.getKind());
-            entity.setId(apiFormat.getId(), false);
+            entity.setKey(apiFormat.getEntityKey());
             entity.fromString(apiFormat.getPayload());
             entity.update();
             resp.getWriter().write(entity.toString());
@@ -79,7 +81,7 @@ public class ApiServlet extends HttpServlet {
             CanBeStoredObject node = apiFormat.isRelationship() ?
                     new Relationship(apiFormat.getKind()) :
                     new Node(apiFormat.getKind());
-            node.setId(apiFormat.getId(), false);
+            node.setKey(apiFormat.getEntityKey());
             node.delete();
             resp.getWriter().write(node.toString());
         } else {

@@ -24,18 +24,18 @@ public class Relationship extends CanBeStoredObject {
     }
 
     public CanBeStoredObject create() {
-        if (from.hasId() && to.hasId()) {
+        if (from.hasKey() && to.hasKey()) {
             String q = Neo4JQueryFactory.getInstance().createRelationshipQuery(this);
             List<Record> records = Neo4JController.getInstance().execute(q);
             this.fromRecord((Record) records.get(0));
         } else {
-            throw new Error("Missing from or to id");
+            throw new Error("Missing from or to key");
         }
         return this;
     }
 
     public CanBeStoredObject update() {
-        if (this.hasId()) {
+        if (this.hasKey()) {
             String q = Neo4JQueryFactory.getInstance().updateRelationshipQuery(this);
             List<Record> records = Neo4JController.getInstance().execute(q);
             this.fromRecord((Record)records.get(0));
@@ -46,7 +46,7 @@ public class Relationship extends CanBeStoredObject {
     }
 
     public CanBeStoredObject delete() {
-        if (this.hasId()) {
+        if (this.hasKey()) {
             String q = Neo4JQueryFactory.getInstance().deleteRelationshipQuery(this);
             List<Record> records = Neo4JController.getInstance().execute(q);
             this.fromRecord((Record)records.get(0));
@@ -57,7 +57,7 @@ public class Relationship extends CanBeStoredObject {
     }
 
     public CanBeStored get(long id) {
-        if (this.hasId()) {
+        if (this.hasKey()) {
             String q = Neo4JQueryFactory.getInstance().getRelationshipQuery(id);
             List<Record> records = Neo4JController.getInstance().execute(q);
             if (records.size() > 0) {
@@ -67,5 +67,10 @@ public class Relationship extends CanBeStoredObject {
             throw new Error("Cannot update relationship without id");
         }
         return this;
+    }
+
+    @Override
+    public CanBeStored get(String key) {
+        return null;
     }
 }

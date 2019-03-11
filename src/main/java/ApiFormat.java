@@ -2,6 +2,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 
+import neo4j.Node;
+import neo4j.Relationship;
 import org.apache.commons.io.IOUtils;
 import utils.ServletRequestUtils;
 
@@ -10,10 +12,12 @@ public class ApiFormat {
     private String version;
     private String kind;
     private String method;
-    private Long id;
+    private String id;
     private ApiType apiType;
     private String payload;
+    private String accessToken;
     final String INVALID_FORMAT = "Invalid format";
+    final String ACCESS_TOKEN = "access_token";
 
     public ApiFormat(HttpServletRequest request) {
         this.check(request);
@@ -46,7 +50,7 @@ public class ApiFormat {
         }
 
         if (uriParts.size() == 5) {
-            id = Long.valueOf(uriParts.get(4));
+            id = uriParts.get(4);
         }
 
         if (method.equals("POST") || method.equals("PUT")) {
@@ -57,6 +61,8 @@ public class ApiFormat {
                 e.printStackTrace();
             }
         }
+
+        this.accessToken = request.getHeader(ACCESS_TOKEN);
 
     }
 
@@ -72,7 +78,7 @@ public class ApiFormat {
         return this.kind;
     }
 
-    public Long getId() {
+    public String getEntityKey() {
         return this.id;
     }
 
@@ -94,6 +100,31 @@ public class ApiFormat {
 
     public boolean isRelationship() {
         return ApiType.Relationship == apiType;
+    }
+
+    public String getAccessToken() {
+        return this.accessToken != null ? this.accessToken : "";
+    }
+
+    public Node getDataNode() {
+        if (apiType == ApiType.Node) {
+            Node node = new Node(kind);
+            node.setKey(id);
+            return node;
+        } else {
+            return null;
+        }
+
+    }
+
+    public Relationship getRelationship() {
+        if (apiType == ApiType.Relationship) {
+            Relationship rel = new Relationship(kind);
+            rel.setKey(id);
+            return rel;
+        } else {
+            return null;
+        }
     }
 
     enum ApiType {

@@ -11,15 +11,15 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 public abstract class CanBeStoredObject implements CanBeStored {
     private static final Logger log = Logger.getLogger(Node.class.getName());
+    public static String KEY_FIELD = "__key__";
     String kind;
-    Long id;
+    String key;
     Map<String, Property> properties;
-
-    LongProperty idProp = new LongProperty("neo_id");
 
     public static final String KIND_DELIMITER = "@";
     public static final String PROPERTY_START = "{";
@@ -30,21 +30,21 @@ public abstract class CanBeStoredObject implements CanBeStored {
         String[] parts = kind.split(KIND_DELIMITER);
         this.kind = parts[0];
         if (parts.length >= 2) {
-            id = Long.valueOf(parts[1]);
+            key = parts[1];
+        } else {
+            key = UUID.randomUUID().toString();
         }
 
     }
 
-    public CanBeStoredObject(String kind, long id) {
-        this(kind);
-        this.get(id);
+    public String getKey() {
+        return this.key;
     }
 
-    public CanBeStoredObject setId(Long id, boolean loadRemote) {
-        this.id = id;
-        if (loadRemote) {
-            get(id);
-        }
+
+    public CanBeStoredObject setKey(String key) {
+        this.key = key;
+        property(new StringProperty(KEY_FIELD).setValue(key));
         return this;
     }
 
@@ -59,8 +59,7 @@ public abstract class CanBeStoredObject implements CanBeStored {
 
     public CanBeStoredObject fromRecord(Record record) {
         Entity entity = toEntity(record);
-        this.id = entity.id();
-        property(idProp.setValue(this.id));
+        this.key = entity.get(KEY_FIELD).asString();
         Iterable<String> keys = entity.keys();
         keys.forEach((s) -> {
             Value value = entity.get(s);
@@ -141,12 +140,23 @@ public abstract class CanBeStoredObject implements CanBeStored {
         return this;
     }
 
-    public boolean hasId() {
-        return this.id != null;
-    }
+
+    public boolean hasKey() {return this.key != null; }
 
     public String toString() {
         return Neo4JQueryFactory.getPropertyJSON(this.properties);
+    }
+
+    public void load() {
+        if (hasKey()) {
+            get(this.key);
+        } else {
+            log.warning("Missing key when load()");
+        }
+    }
+
+    public String getKind() {
+        return kind;
     }
 
 }

@@ -13,5 +13,9 @@ public abstract class Property<T> {
         return this;
     }
 
+    public T getValue() {
+        return value;
+    }
+
     public abstract String toQueryString();
 }

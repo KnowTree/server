@@ -8,4 +8,6 @@ public interface CanBeStored {
     CanBeStored delete();
 
     CanBeStored get(long id);
+
+    CanBeStored get(String key);
 }
