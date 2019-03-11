@@ -21,8 +21,12 @@ public class Node extends CanBeStoredObject {
         super(kind);
     }
 
-    public Node(String kind, long id) {
-        super(kind, id);
+    /*
+        Notice : this constructor make instance has id but not load props yet
+     */
+    public Node(String kind, String key) {
+        super(kind);
+        setKey(key);
     }
 
     @Override
@@ -31,8 +35,8 @@ public class Node extends CanBeStoredObject {
     }
 
     public Node create() {
-        if (this.hasId()) {
-            throw new Error("Cannot create existing node id = " + this.id);
+        if (this.hasKey()) {
+            throw new Error("Cannot create existing node key = " + this.key);
         } else {
             Neo4JController controller = Neo4JController.getInstance();
             Neo4JQueryFactory queryFactory = Neo4JQueryFactory.getInstance();
@@ -44,7 +48,7 @@ public class Node extends CanBeStoredObject {
     }
 
     public Node update() {
-        if (this.hasId()) {
+        if (this.hasKey()) {
             String query = Neo4JQueryFactory.getInstance().updateNodeQuery(this);
             List<Record> records = Neo4JController.getInstance().execute(query);
             this.fromRecord((Record)records.get(0));
@@ -55,7 +59,7 @@ public class Node extends CanBeStoredObject {
     }
 
     public Node delete() {
-        if (this.hasId()) {
+        if (this.hasKey()) {
             String query = Neo4JQueryFactory.getInstance().deleteNodeQuery(this);
             List<Record> records = Neo4JController.getInstance().execute(query);
             this.fromRecord((Record)records.get(0));
@@ -70,6 +74,18 @@ public class Node extends CanBeStoredObject {
         List<Record> records = Neo4JController.getInstance().execute(q);
         if (records.size() == 0) {
             throw new Error("Cannot find node " + this.kind + "with id " + id);
+        } else {
+            this.fromRecord((Record)records.get(0));
+            return this;
+        }
+    }
+
+    @Override
+    public CanBeStored get(String key) {
+        String q = Neo4JQueryFactory.getInstance().getNodeByKeyQuery(key);
+        List<Record> records = Neo4JController.getInstance().execute(q);
+        if (records.size() == 0) {
+            throw new Error("Cannot find node " + this.kind + "with key " + key);
         } else {
             this.fromRecord((Record)records.get(0));
             return this;
