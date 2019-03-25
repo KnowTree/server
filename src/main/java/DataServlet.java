@@ -1,5 +1,4 @@
-import acl.AccessControlList;
-import acl.AccessToken;
+import acl.*;
 import neo4j.Node;
 
 import javax.servlet.ServletException;
@@ -12,7 +11,7 @@ import java.security.NoSuchAlgorithmException;
 /*/
     Main servlet, include ACL
  */
-public class AppServlet extends HttpServlet {
+public class DataServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ApiFormat apiFormat = ensureValidApiFormat(req, resp);
@@ -51,12 +50,38 @@ public class AppServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPut(req, resp);
+        ApiFormat apiFormat = ensureValidApiFormat(req, resp);
+        AccessToken accessToken = new AccessToken(apiFormat.getAccessToken());
+        try {
+            if (accessToken.isValid()) {
+                Node newNode = new Node(apiFormat.getKind());
+                String dataGroup = req.getParameter("usergroup");
+                Node dataGroupNode = dataGroup != null ? DataGroup.getDataGroup(dataGroup) : DataGroup.getPublicDataGroup();
+                newNode.fromString(apiFormat.getPayload());
+                Node node = (Node) AccessControlList.getInstance().addData(
+                            accessToken.getUser(), newNode, dataGroupNode);
+                resp.getWriter().write(node.toString());
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doDelete(req, resp);
+        ApiFormat apiFormat = ensureValidApiFormat(req, resp);
+        AccessToken accessToken = new AccessToken(apiFormat.getAccessToken());
+        try {
+            if (accessToken.isValid()) {
+                Node deleteNode = new Node(apiFormat.getKind());
+                deleteNode.fromString(apiFormat.getPayload());
+                Node node = (Node) AccessControlList.getInstance().deleteData(
+                        accessToken.getUser(), deleteNode);
+                resp.getWriter().write(node.toString());
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
     }
 
     private ApiFormat ensureValidApiFormat( HttpServletRequest req, HttpServletResponse response) throws IOException {

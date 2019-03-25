@@ -1,8 +1,5 @@
 package neo4j;
 
-import acl.Policy;
-import acl.PublicPolicy;
-
 import java.util.Iterator;
 import java.util.Map;
 
@@ -73,13 +70,6 @@ class Neo4JQueryFactory {
 
     public String getRelationshipQuery(long id) {
         return "MATCH (n)-[r]->(m) WHERE ID(r) = " + id + " RETURN r";
-    }
-
-    public String checkGetPermission(Node user, Node data) {
-        return  "MATCH (n)-[r]->(m:"+ Policy.KIND +") " +
-                "WHERE m." + CanBeStoredObject.KEY_FIELD + " = \"" + PublicPolicy.NAME + "\" " +
-                "AND m.__key__ = " + data.key + " " +
-                "RETURN n";
     }
 
 }
