@@ -17,5 +17,9 @@ public abstract class Property<T> {
         return value;
     }
 
+    public String key() {
+        return key;
+    }
+
     public abstract String toQueryString();
 }
