@@ -1,7 +1,0 @@
-Each user belong to 1 or many UserGroup
-Each data belong to 1 or many DataGroup
-Each DataGroup have 2 relationship :
-    - READ : point to 1 or many UserGroup to allow users in this group to read
-    - WRITE : point to 1 or many UserGroup to allow users in this group to edit / delete
-Each data have a relationship BELONG_TO point to user who create it
-
