@@ -1,10 +1,13 @@
 package system;
 
+import configurations.Configuration;
+import neo4j.LongProperty;
 import neo4j.Property;
 import org.json.JSONObject;
 import system.fields.HasId;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Data {
@@ -23,32 +26,55 @@ public class Data {
 
     public Object get(Property field) {
         String fieldName = field.key();
-        field.setValue(jsonObject.get(fieldName));
-        return field.getValue();
+        return jsonObject.get(fieldName);
     }
 
-    public Data retrieve() {
-        Long id = (Long) this.get(HasId.id);
-        jsonObject = dataController.get(id);
+    public Long getLong(Property<Long> property) {
+        return jsonObject.getLong(property.key());
+    }
+
+    public String getString(Property<String> property) {
+        return jsonObject.getString(property.key());
+    }
+
+    public Data set(Property field) {
+        jsonObject.put(field.key(), field.getValue());
         return this;
     }
 
-    public Data create() {
-        JSONObject result = dataController.create(jsonObject);
+    public Data retrieve() throws Exception {
+        Long id = getLong(HasId.id);
+        List<Property> fields = Configuration.getInstance().fieldMap().getFields(getKind());
+        if (fields == null) throw new Error("Unidentified kind " + getKind());
+        jsonObject = dataController.get(getKind(), id, fields);
+        return this;
+    }
+
+    public Data create() throws Exception {
+        JSONObject result = dataController.create(getKind(), jsonObject);
         jsonObject = result;
         return this;
     }
 
-    public Data update() {
-        Long id = (Long) get(HasId.id);
-        JSONObject result = dataController.update(id, jsonObject);
+    public Data update() throws Exception {
+        Long id = getLong(HasId.id);
+        JSONObject result = dataController.update(getKind(), id, jsonObject);
         jsonObject = result;
         return this;
     }
 
-    public boolean delete() {
-        Long id = (Long) get(HasId.id);
-        return dataController.delete(id);
+    public boolean delete() throws Exception {
+        Long id = getLong(HasId.id);
+        return dataController.delete(getKind(), id);
     }
 
+    public Data setJSONObject(JSONObject jsonObject) {
+        this.jsonObject = jsonObject;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return jsonObject.toString();
+    }
 }

@@ -11,9 +11,6 @@
 
 
     <env-variables>
-        <env-var name="neo4j_host" value="bolt://localhost:7687" />
-        <env-var name="neo4j_username" value="neo4j" />
-        <env-var name="neo4j_password" value="pppppp" />
     </env-variables>
 
 

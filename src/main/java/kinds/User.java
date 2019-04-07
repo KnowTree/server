@@ -10,5 +10,4 @@ public class User extends Data {
         super("User", Configuration.getInstance().getSystemConfiguration().getDatabaseController());
     }
 
-
 }

@@ -2,8 +2,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 
-import neo4j.Node;
-import neo4j.Relationship;
 import org.apache.commons.io.IOUtils;
 import utils.ServletRequestUtils;
 
@@ -38,7 +36,7 @@ public class UrlParser {
         }
 
         if (uriParts.size() == 4) {
-            id = uriParts.get(4);
+            id = uriParts.get(3);
         }
 
         if (method.equals("POST") || method.equals("PUT")) {
@@ -84,6 +82,10 @@ public class UrlParser {
 
     public String getAccessToken() {
         return this.accessToken != null ? this.accessToken : "";
+    }
+
+    public Long getId() {
+        return Long.valueOf(id);
     }
 
 }

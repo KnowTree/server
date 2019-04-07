@@ -6,7 +6,7 @@
 
     <servlet>
         <servlet-name>api</servlet-name>
-        <servlet-class>ApiServlet</servlet-class>
+        <servlet-class>RestServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -24,19 +24,4 @@
         <url-pattern>/search/*</url-pattern>
     </servlet-mapping>
 
-    <!-- Error handler -->
-    <servlet>
-        <servlet-name>ErrorHandler</servlet-name>
-        <servlet-class>ErrorHandler</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ErrorHandler</servlet-name>
-        <url-pattern>/ErrorHandler</url-pattern>
-    </servlet-mapping>
-
-
-    <error-page>
-        <exception-type>java.io.Exception</exception-type >
-        <location>/ErrorHandler</location>
-    </error-page>
 </web-app>

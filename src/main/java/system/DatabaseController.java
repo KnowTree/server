@@ -1,15 +1,18 @@
 package system;
 
+import neo4j.Property;
 import org.json.JSONObject;
 
+import java.util.List;
+
 public interface DatabaseController {
-    JSONObject create(JSONObject data);
+    JSONObject create(String kind, JSONObject data) throws Exception;
 
-    JSONObject update(Long id, JSONObject updateData);
+    JSONObject update(String kind, Long id, JSONObject updateData) throws Exception;
 
-    boolean delete(Long id);
+    boolean delete(String kind, Long id) throws Exception;
 
-    JSONObject get(Long id);
+    JSONObject get(String kind, Long id, List<Property> properties) throws Exception;
 
-    JSONObject get(String key);
+    JSONObject get(String key, List<Property> props) throws Exception;
 }
