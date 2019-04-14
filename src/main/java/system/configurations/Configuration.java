@@ -1,16 +1,12 @@
-package configurations;
+package system.configurations;
 
-import neo4j.Property;
+import system.acl.ACL;
 import system.fields.FieldMap;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class Configuration {
     SystemConfiguration systemConfiguration;
     FieldMap fieldMap;
+    ACL acl;
 
 
     public static Configuration instance;
@@ -30,9 +26,18 @@ public class Configuration {
         return this;
     }
 
+    public Configuration setACL(ACL acl) {
+        this.acl = acl;
+        return this;
+    }
+
     public SystemConfiguration getSystemConfiguration() { return systemConfiguration;}
 
     public FieldMap fieldMap() {
         return this.fieldMap;
+    }
+
+    public ACL getAcl() {
+        return this.acl;
     }
 }

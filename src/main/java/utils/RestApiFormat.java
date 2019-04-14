@@ -1,3 +1,5 @@
+package utils;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
@@ -5,7 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.io.IOUtils;
 import utils.ServletRequestUtils;
 
-public class UrlParser {
+public class RestApiFormat {
+    private String request_kind;
     private String error;
     private String version;
     private String kind;
@@ -16,15 +19,13 @@ public class UrlParser {
     final String INVALID_FORMAT = "Invalid format";
     final String ACCESS_TOKEN = "access_token";
 
-    public UrlParser(HttpServletRequest request) {
+    public RestApiFormat(HttpServletRequest request) {
         this.check(request);
     }
 
     private void check(HttpServletRequest request) {
         ArrayList<String> uriParts = ServletRequestUtils.getURIParts(request);
-        if (!((String) uriParts.get(0)).equals("api")) {
-            this.error = "Invalid format";
-        }
+        request_kind = uriParts.get(0);
 
         this.method = request.getMethod();
 
@@ -62,10 +63,6 @@ public class UrlParser {
 
     public String getKind() {
         return this.kind;
-    }
-
-    public String getEntityKey() {
-        return this.id;
     }
 
     public String getError() {

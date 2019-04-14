@@ -1,4 +1,4 @@
-package neo4j;
+package system.property;
 
 public class StringProperty extends Property<String> {
     public StringProperty(String key) {

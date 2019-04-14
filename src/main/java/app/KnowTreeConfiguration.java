@@ -1,6 +1,6 @@
 package app;
 
-import configurations.SystemConfiguration;
+import system.configurations.SystemConfiguration;
 import datastore.DatastoreController;
 import system.DatabaseController;
 

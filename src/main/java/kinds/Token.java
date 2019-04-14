@@ -1,0 +1,36 @@
+package kinds;
+
+import org.json.JSONObject;
+import system.Data;
+import system.DatabaseController;
+import system.configurations.Configuration;
+import system.fields.HasCredential;
+import utils.RestApiFormat;
+
+public class Token extends Data {
+    public Token() {
+        super("Token", Configuration.getInstance().getSystemConfiguration().getDatabaseController());
+    }
+
+    @Override //login
+    public boolean canGet(Data currentUser, Data data, RestApiFormat urlParser) {
+        boolean hasCredential = data.containProperties(HasCredential.username, HasCredential.password);
+        return currentUser == null && hasCredential;
+    }
+
+    @Override
+    public boolean canUpdate(Data currentUser, Data currentData, JSONObject updateData, RestApiFormat restApiFormat) {
+        return false;
+    }
+
+    @Override // register
+    public boolean canCreate(Data currentUser, Data data, RestApiFormat urlParser) {
+        boolean hasCredential = data.containProperties(HasCredential.username, HasCredential.password);
+        return currentUser == null && hasCredential;
+    }
+
+    @Override
+    public boolean canDelete(Data currentUser, Data data, RestApiFormat urlParser) {
+        return false;
+    }
+}

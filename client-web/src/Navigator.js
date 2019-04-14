@@ -9,6 +9,7 @@ export default class Navigator extends Component {
         this.state = {};
         this.setItems();
         this.itemSelected = this.itemSelected.bind(this);
+        this.onAddClick = this.onAddClick.bind(this);
     }
 
     setItems() {
@@ -54,11 +55,16 @@ export default class Navigator extends Component {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 {this.createNavItems()}
+                <button className="btn btn-primary" onClick={this.onAddClick}>Add</button>
             </nav>
         )
     }
 
     itemSelected(name) {
         return (e) => this.fireEvent("Nav", name);
+    }
+
+    onAddClick() {
+        this.fireEvent("Add");
     }
 }

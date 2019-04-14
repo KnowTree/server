@@ -1,6 +1,6 @@
 package system;
 
-import neo4j.Property;
+import system.property.Property;
 import org.json.JSONObject;
 
 import java.util.List;

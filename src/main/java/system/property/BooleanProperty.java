@@ -1,4 +1,4 @@
-package neo4j;
+package system.property;
 
 public class BooleanProperty extends Property<Boolean> {
     public BooleanProperty(String key) {

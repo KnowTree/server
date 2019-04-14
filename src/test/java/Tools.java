@@ -21,9 +21,9 @@ public class Tools {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put(HasName.first_name.key(), "Test B");
         jsonObject.put(HasName.last_name.key(), "Rich");
-        //createEntity(LOCALHOST, "User", jsonObject);
-        //updateEntity(LOCALHOST, "User", 3L, jsonObject);
-        deleteEntity(LOCALHOST, "User", 3L);
+        //createEntity(LOCALHOST, "user", jsonObject);
+        updateEntity(LOCALHOST, "user", 3L, jsonObject);
+        //deleteEntity(LOCALHOST, "user", 3L);
     }
     public static void createEntity(String host, String kind, JSONObject data) throws IOException {
         String path = String.format("%s/%s/%s/%s", host, API_PREFIX, API_VERSION, kind);
@@ -31,8 +31,7 @@ public class Tools {
     }
 
     public static void updateEntity(String host, String kind, Long id, JSONObject updateData) throws IOException {
-        String path = String.format("%s/%s/%s/%s", host, API_PREFIX, API_VERSION, kind);
-        updateData.put(HasId.id.key(), id);
+        String path = String.format("%s/%s/%s/%s/%s", host, API_PREFIX, API_VERSION, kind, id);
         send("POST", path, null, updateData.toString());
     }
 

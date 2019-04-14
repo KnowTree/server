@@ -18,13 +18,13 @@ export default class Dashboard extends Component {
                 },
                 {
                     active : false,
-                    label : "Data",
-                    name : "data"
+                    label : "To Read",
+                    name : "to_read"
                 }
                 ],
             app_name : 'KnowTree',
         };
-        this.listenOn("Nav", this.onNav, this);
+        this.listenOn("Nav", Dashboard.onNav, this);
 
     }
 
@@ -36,7 +36,7 @@ export default class Dashboard extends Component {
             app = <DashBoardDataSection/>;
         }
         return (
-            <div className="container">
+            <div>
                 <Navigator brandName={this.state.app_name} items={this.state.menu}
                            selected={this.state.currentSection}
                 />
@@ -45,7 +45,7 @@ export default class Dashboard extends Component {
         )
     }
 
-    onNav(context, payload) {
+    static onNav(context, payload) {
         DataValidator.demandString(payload);
         context.setState({currentSection : payload});
     }

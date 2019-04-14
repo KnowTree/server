@@ -1,18 +1,14 @@
 package datastore;
 
 import com.google.appengine.api.datastore.*;
-import com.google.appengine.repackaged.com.google.datastore.v1.client.Datastore;
-import neo4j.LongProperty;
-import neo4j.Property;
-import neo4j.StringProperty;
+import system.property.LongProperty;
+import system.property.Property;
+import system.property.StringProperty;
 import org.json.JSONObject;
-import system.Data;
 import system.DatabaseController;
 import system.fields.HasId;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 public class DatastoreController implements DatabaseController {
     DatastoreService datastore;

@@ -1,7 +1,6 @@
 package system.fields;
 
-import configurations.Configuration;
-import neo4j.Property;
+import system.property.Property;
 
 import java.util.ArrayList;
 import java.util.HashMap;

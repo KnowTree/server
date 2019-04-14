@@ -1,5 +1,6 @@
 import React from 'react';
 import Component from "./component/Component";
+import KnowledgeViewer from "./KnowledgeViewer";
 
 export default class DashboardHomeSection extends Component{
     constructor(props) {
@@ -8,7 +9,9 @@ export default class DashboardHomeSection extends Component{
 
     render() {
         return (
-            <h1>Home Section</h1>
+            <div>
+                <KnowledgeViewer/>
+            </div>
         )
     }
 

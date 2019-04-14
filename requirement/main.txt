@@ -3,7 +3,7 @@ This file describes main pupose of KnowTree application
 Definations :
 - Knowledge : Any thing that help people know something includes tutorials, discussions, analytics, reports, philosophies, advises, books, etc in any format
 - Knowledge node (aka k-node) : A entity presenting a knowledge stored in system. They're categorized and linked together to produce a mind map
-- Relationship : the link name between k-nodes. Relationships mainly are the order of reading.
+- Relationship : the link name between k-nodes. Relationships mainly are for reading ordering.
 - Client : person who use this tool
 - Admin : person who manage & configure this system
 - System : refer to our application and it's back end

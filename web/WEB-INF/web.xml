@@ -6,13 +6,23 @@
 
     <servlet>
         <servlet-name>api</servlet-name>
-        <servlet-class>RestServlet</servlet-class>
+        <servlet-class>KnowTreeRestServlet</servlet-class>
     </servlet>
+
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>servlets.AuthFilter</filter-class>
+    </filter>
 
     <servlet-mapping>
         <servlet-name>api</servlet-name>
         <url-pattern>/api/*</url-pattern>
     </servlet-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <servlet-name>api</servlet-name>
+    </filter-mapping>
 
     <servlet>
         <servlet-name>search</servlet-name>

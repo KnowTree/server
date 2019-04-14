@@ -1,7 +1,7 @@
 package system.fields;
 
-import neo4j.Property;
-import neo4j.StringProperty;
+import system.property.Property;
+import system.property.StringProperty;
 
 public interface HasEmail {
     Property email = new StringProperty("email");

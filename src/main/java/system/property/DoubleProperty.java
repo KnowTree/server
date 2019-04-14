@@ -1,4 +1,4 @@
-package neo4j;
+package system.property;
 
 public class DoubleProperty extends Property<Double> {
     public DoubleProperty(String key) {

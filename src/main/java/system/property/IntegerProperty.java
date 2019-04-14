@@ -1,4 +1,4 @@
-package neo4j;
+package system.property;
 
 public class IntegerProperty extends Property<Integer> {
     public IntegerProperty(String key) {

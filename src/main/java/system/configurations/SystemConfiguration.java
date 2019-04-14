@@ -1,4 +1,4 @@
-package configurations;
+package system.configurations;
 
 import system.DatabaseController;
 

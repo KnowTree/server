@@ -1,5 +1,7 @@
 import React from 'react';
 import Component from "./component/Component";
+import DataBrowser from "./component/DataBrowser";
+import KnowledgaeNode from "./KnowledgaeNode";
 
 export default class DashBoardDataSection extends Component{
     constructor(props) {
@@ -8,7 +10,9 @@ export default class DashBoardDataSection extends Component{
 
     render() {
         return (
-            <h1>Data Section</h1>
+            <div>
+                <KnowledgaeNode/>
+            </div>
         )
     }
 
