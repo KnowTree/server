@@ -1,5 +1,6 @@
 import org.json.JSONObject;
 import org.junit.Test;
+import system.fields.HasCredential;
 import system.fields.HasId;
 import system.fields.HasName;
 
@@ -21,9 +22,12 @@ public class Tools {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put(HasName.first_name.key(), "Test B");
         jsonObject.put(HasName.last_name.key(), "Rich");
+        jsonObject.put(HasCredential.username.key(), "username");
+        jsonObject.put(HasCredential.password.key(), "password");
         //createEntity(LOCALHOST, "user", jsonObject);
-        updateEntity(LOCALHOST, "user", 3L, jsonObject);
+        //updateEntity(LOCALHOST, "user", 3L, jsonObject);
         //deleteEntity(LOCALHOST, "user", 3L);
+
     }
     public static void createEntity(String host, String kind, JSONObject data) throws IOException {
         String path = String.format("%s/%s/%s/%s", host, API_PREFIX, API_VERSION, kind);

@@ -42,7 +42,7 @@ public class AccessToken {
 
     public Data loadUser() throws Exception {
         User user = new User();
-        user.set(HasId.id.setValue(userId));
+        user.set(HasId.id, userId);
         user.retrieve(null);
         return user;
     }

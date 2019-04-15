@@ -38,8 +38,9 @@ public abstract class Data implements RestEntity {
     }
 
     public Boolean getBoolean(Property<Boolean> prop) {return jsonObject.getBoolean(prop.key());}
-    public Data set(Property field) {
-        jsonObject.put(field.key(), field.getValue());
+
+    public Data set(Property field, Object value) {
+        jsonObject.put(field.key(), field.acceptValue(value));
         return this;
     }
 
@@ -79,6 +80,10 @@ public abstract class Data implements RestEntity {
     public Data setJSONObject(JSONObject jsonObject) {
         this.jsonObject = jsonObject;
         return this;
+    }
+
+    public JSONObject jsonObject() {
+        return jsonObject;
     }
 
     public boolean containProperties(Property... props) {

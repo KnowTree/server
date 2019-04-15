@@ -82,6 +82,28 @@
             <version>1.9.73</version>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.appengine/appengine-api-labs -->
+        <dependency>
+            <groupId>com.google.appengine</groupId>
+            <artifactId>appengine-api-labs</artifactId>
+            <version>1.9.73</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.appengine/appengine-api-stubs -->
+        <dependency>
+            <groupId>com.google.appengine</groupId>
+            <artifactId>appengine-api-stubs</artifactId>
+            <version>1.9.73</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.mock-server/mockserver-jetty -->
+        <dependency>
+            <groupId>org.mock-server</groupId>
+            <artifactId>mockserver-jetty</artifactId>
+            <version>1.12</version>
+            <scope>test</scope>
+        </dependency>
 
 
     </dependencies>

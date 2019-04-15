@@ -1,10 +1,12 @@
 package kinds;
 
+import kinds.fields.HasUrl;
 import kinds.fields.IsAdmin;
 import org.json.JSONObject;
 import system.Data;
 import system.DatabaseController;
 import system.configurations.Configuration;
+import system.fields.HasId;
 import system.fields.HasTracking;
 import system.property.Property;
 import utils.RestApiFormat;
@@ -39,5 +41,15 @@ public class KNode extends Data {
     @Override
     public boolean canDelete(Data currentUser, Data data, RestApiFormat urlParser) {
         return currentUser != null && currentUser.id().equals(data.getLong(HasTracking.created_by));
+    }
+
+    public KNode setTitle(String title) {
+        set(HasUrl.title, title);
+        return this;
+    }
+
+    public KNode setUrl(String url) {
+        set(HasUrl.url, url);
+        return this;
     }
 }

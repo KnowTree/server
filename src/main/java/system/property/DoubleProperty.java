@@ -5,7 +5,18 @@ public class DoubleProperty extends Property<Double> {
         super(key);
     }
 
-    public String toQueryString() {
-        return ((Double)this.value).toString();
+    @Override
+    public Double acceptValue(Object obj) {
+        if (obj instanceof Double) {
+            return (Double) obj;
+        } else if (obj instanceof String) {
+            return Double.valueOf((String) obj);
+        } else if (obj instanceof Long) {
+            return ((Long) obj).doubleValue();
+        } else if (obj instanceof Integer) {
+            return ((Integer) obj).doubleValue();
+        }
+        throw new Error(CANNOT_PARSE);
     }
+
 }

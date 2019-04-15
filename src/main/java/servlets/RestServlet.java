@@ -32,7 +32,7 @@ public abstract class RestServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RestApiFormat urlParser = (RestApiFormat) req.getAttribute(RequestHeaders.REQUEST_URL_DATA);
        Data data = DataFactory.getInstance().create(urlParser.getKind());
-       data.set(HasId.id.setValue(urlParser.getId()));
+       data.set(HasId.id, urlParser.getId());
         try {
             data.retrieve(null);
         } catch (Exception e) {
@@ -57,7 +57,7 @@ public abstract class RestServlet extends HttpServlet {
         String payloadRaw = urlParser.getPayload();
         JSONObject jsonObject = new JSONObject(payloadRaw);
         Data data = DataFactory.getInstance().create(urlParser.getKind());
-        data.set(HasId.id.setValue(urlParser.getId()));
+        data.set(HasId.id, urlParser.getId());
         try {
             data.retrieve(null);
             if (canUpdate((Data) req.getAttribute(RequestHeaders.CURRENT_USER), data, jsonObject, urlParser)) {
@@ -106,7 +106,7 @@ public abstract class RestServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RestApiFormat urlParser = (RestApiFormat) req.getAttribute(RequestHeaders.REQUEST_URL_DATA);
         Data data = DataFactory.getInstance().create(urlParser.getKind());
-        data.set(HasId.id.setValue(urlParser.getId()));
+        data.set(HasId.id, urlParser.getId());
 
         try {
             data.retrieve(null);

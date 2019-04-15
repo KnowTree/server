@@ -5,7 +5,10 @@ public class StringProperty extends Property<String> {
         super(key);
     }
 
-    public String toQueryString() {
-        return "\"" + (String)this.value + "\"";
+    @Override
+    public String acceptValue(Object obj) {
+        if (obj instanceof String) return (String) obj;
+        else return obj.toString();
     }
+
 }

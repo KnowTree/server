@@ -7,7 +7,12 @@ public class ListProperty<V> extends Property<List<V>> {
         super(key);
     }
 
-    public String toQueryString() {
-        return null;
+    @Override
+    public List<V> acceptValue(Object obj) {
+        if (obj instanceof List) {
+            return (List<V>) obj;
+        }
+        throw new Error(CANNOT_PARSE);
     }
+
 }
