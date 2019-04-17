@@ -1,6 +1,15 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import style from './Style.css';
-import Dashboard from "./Dashboard";
+import React from 'react'
+import { render } from 'react-dom'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import App from './components/App'
+import rootReducer from './reducers'
 
-ReactDOM.render(<Dashboard/>, document.getElementById("index"));
+const store = createStore(rootReducer)
+
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+)
