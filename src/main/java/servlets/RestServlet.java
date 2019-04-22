@@ -23,15 +23,13 @@ public abstract class RestServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        configuration = Configuration.getInstance();
-        configuration.fieldMap().addFields("User",
-                Arrays.asList(HasName.first_name, HasName.middle_name, HasName.last_name, HasCredential.username, HasCredential.password, HasEmail.email));
+        configuration = Configuration.getInstance();;
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RestApiFormat urlParser = (RestApiFormat) req.getAttribute(RequestHeaders.REQUEST_URL_DATA);
-       Data data = DataFactory.getInstance().create(urlParser.getKind());
+       Data data = Configuration.getInstance().dataFactory().create(urlParser.getKind());
        data.set(HasId.id, urlParser.getId());
         try {
             data.retrieve(null);
@@ -56,7 +54,7 @@ public abstract class RestServlet extends HttpServlet {
         RestApiFormat urlParser = (RestApiFormat) req.getAttribute(RequestHeaders.REQUEST_URL_DATA);
         String payloadRaw = urlParser.getPayload();
         JSONObject jsonObject = new JSONObject(payloadRaw);
-        Data data = DataFactory.getInstance().create(urlParser.getKind());
+        Data data = Configuration.getInstance().dataFactory().create(urlParser.getKind());
         data.set(HasId.id, urlParser.getId());
         try {
             data.retrieve(null);
@@ -83,7 +81,7 @@ public abstract class RestServlet extends HttpServlet {
         RestApiFormat urlParser = (RestApiFormat) req.getAttribute(RequestHeaders.REQUEST_URL_DATA);
         String payloadRaw = urlParser.getPayload();
         JSONObject jsonObject = new JSONObject(payloadRaw);
-        Data data = DataFactory.getInstance().create(urlParser.getKind());
+        Data data = Configuration.getInstance().dataFactory().create(urlParser.getKind());
         data.setJSONObject(jsonObject);
         if (canCreate((Data) req.getAttribute(RequestHeaders.CURRENT_USER), data, urlParser)) {
             try {
@@ -105,7 +103,7 @@ public abstract class RestServlet extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RestApiFormat urlParser = (RestApiFormat) req.getAttribute(RequestHeaders.REQUEST_URL_DATA);
-        Data data = DataFactory.getInstance().create(urlParser.getKind());
+        Data data = Configuration.getInstance().dataFactory().create(urlParser.getKind());
         data.set(HasId.id, urlParser.getId());
 
         try {

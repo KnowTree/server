@@ -1,5 +1,6 @@
 package servlets;
 
+import kinds.User;
 import org.json.JSONObject;
 import servlets.ErrorCodes;
 import servlets.ErrorHandler;
@@ -8,6 +9,8 @@ import system.Data;
 import system.acl.ACL;
 import system.acl.AccessToken;
 import system.configurations.Configuration;
+import system.fields.HasCredential;
+import utils.Commons;
 import utils.RestApiFormat;
 
 import javax.servlet.*;
@@ -23,13 +26,19 @@ public class AuthFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        RestApiFormat restApiFormat = new RestApiFormat((HttpServletRequest) request);
-        request.setAttribute(RequestHeaders.REQUEST_URL_DATA, restApiFormat);
         Data currentUser = null;
 
         String token = (String) request.getAttribute(RequestHeaders.TOKEN);
         if (token == null) {
             request.setAttribute(RequestHeaders.CURRENT_USER, null);
+            if (isLoginPath((HttpServletRequest) request)) {
+                String username = request.getParameter(HasCredential.username.key());
+                String password = request.getParameter(HasCredential.password.key());
+                if (username != null && password != null) {
+                } else {
+                    ErrorHandler.handle(request, response, ErrorCodes.MISSING_PARAM, "Invalid username or password");
+                }
+            }
         } else {
             AccessToken accessToken = new AccessToken(token);
             boolean tokenValid;
@@ -56,5 +65,14 @@ public class AuthFilter implements Filter {
     @Override
     public void destroy() {
 
+    }
+
+    private boolean isLoginPath(HttpServletRequest servletRequest) {
+        String path = servletRequest.getRequestURI();
+        return path.equals("/api/login");
+    }
+
+    private User getLoginUser(String username, String password) {
+        return null;
     }
 }

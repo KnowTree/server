@@ -2,7 +2,10 @@ package system.property;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 public class DateProperty extends Property<Date> {
     private String format = "dd/MM/yyyy";
@@ -25,6 +28,11 @@ public class DateProperty extends Property<Date> {
             }
         }
         throw new Error(CANNOT_PARSE);
+    }
+
+    @Override
+    public List<String> createLabels(Date value) {
+        return Collections.singletonList(key + ":" + String.valueOf(value.getTime()));
     }
 
     public DateProperty format(String format) {

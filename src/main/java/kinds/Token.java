@@ -5,7 +5,10 @@ import system.Data;
 import system.DatabaseController;
 import system.configurations.Configuration;
 import system.fields.HasCredential;
+import system.property.Property;
 import utils.RestApiFormat;
+
+import java.util.List;
 
 public class Token extends Data {
     public Token() {
@@ -32,5 +35,20 @@ public class Token extends Data {
     @Override
     public boolean canDelete(Data currentUser, Data data, RestApiFormat urlParser) {
         return false;
+    }
+
+    @Override
+    public Property[] fields() {
+        return new Property[0];
+    }
+
+    @Override
+    public Property[] labelFields() {
+        return new Property[0];
+    }
+
+    @Override
+    public List<String> addCustomLabels() {
+        return null;
     }
 }

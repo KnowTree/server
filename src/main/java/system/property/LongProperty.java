@@ -1,5 +1,9 @@
 package system.property;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class LongProperty extends Property<Long> {
     public LongProperty(String key) {
         super(key);
@@ -17,6 +21,11 @@ public class LongProperty extends Property<Long> {
             return ((Integer) obj).longValue();
         }
         throw new Error(CANNOT_PARSE);
+    }
+
+    @Override
+    public List<String> createLabels(Long value) {
+        return Collections.singletonList(key + ":" + value.toString());
     }
 
 }

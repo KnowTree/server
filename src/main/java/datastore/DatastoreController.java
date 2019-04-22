@@ -1,14 +1,23 @@
 package datastore;
 
 import com.google.appengine.api.datastore.*;
+import system.Data;
+import system.DataFactory;
+import system.configurations.Configuration;
+import system.fields.CanSearch;
+import system.fields.FieldMap;
+import system.property.IntegerProperty;
 import system.property.LongProperty;
 import system.property.Property;
 import system.property.StringProperty;
 import org.json.JSONObject;
 import system.DatabaseController;
 import system.fields.HasId;
+import utils.SearchData;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class DatastoreController implements DatabaseController {
     DatastoreService datastore;
@@ -33,11 +42,7 @@ public class DatastoreController implements DatabaseController {
     public static JSONObject entityToJSONObject(Entity entity, List<Property> fields) {
         JSONObject json = new JSONObject();
         for (Property field : fields) {
-            if (field instanceof LongProperty) {
-                json.put(field.key(), (Long)entity.getProperty(field.key()));
-            } else if (field instanceof StringProperty) {
-                json.put(field.key(), (String) entity.getProperty(field.key()));
-            }
+            json.put(field.key(), field.acceptValue(entity.getProperty(field.key())));
         }
         json.put(HasId.id.key(), entity.getKey().getId());
         return json;
@@ -79,4 +84,35 @@ public class DatastoreController implements DatabaseController {
         Entity entity = datastore.get(datastoreKey);
         return entityToJSONObject(entity, props);
     }
+
+    @Override
+    public List<Data> search(SearchData searchApiData) {
+        List<SearchData.QueryData> queryDataList = searchApiData.getQueryDataList();
+        List<String> labels = new ArrayList<>();
+        for (SearchData.QueryData queryData : queryDataList) {
+            String ops = queryData.getOperator();
+            Query.FilterOperator filterOperator;
+            Property field = CanSearch.labels;
+            labels.addAll(field.createLabels(queryData.getValue()));
+        }
+
+        Query.FilterPredicate filterPredicate =
+                new Query.FilterPredicate(searchApiData.getKind(), Query.FilterOperator.EQUAL, labels);
+
+        Query query = new Query(searchApiData.getKind()).setFilter(filterPredicate);
+
+        PreparedQuery preparedQuery = datastore.prepare(query);
+        List<Entity> entities = preparedQuery.asList(FetchOptions.Builder.withLimit(100));
+
+        List<Data> result = new ArrayList<>();
+        for (Entity entity : entities) {
+            Data data = Configuration.getInstance().dataFactory().create(searchApiData.getKind());
+            data.setJSONObject(entityToJSONObject(entity, Configuration.getInstance().fieldMap().getFields(searchApiData.getKind())));
+            result.add(data);
+        }
+        return result;
+    }
+
+
+
 }

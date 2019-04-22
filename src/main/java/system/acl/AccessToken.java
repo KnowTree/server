@@ -49,10 +49,12 @@ public class AccessToken {
 
     private String calculateHash() throws NoSuchAlgorithmException {
         String salt = System.getenv(KNOWTREE_SALT_ENV);
-        String msg = String.format("%s-%s-%s", userId, expireDate.getTime(), salt);
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        byte[] hashInBytes = md.digest(msg.getBytes(StandardCharsets.UTF_8));
-
+        String msg = getHashMessage(userId, expireDate.getTime(), salt);
+        byte[] hashInBytes = Commons.hash(msg);
         return Commons.byteToHex(hashInBytes);
+    }
+
+    public static String getHashMessage(Long userId, Long expire, String salt) {
+        return String.format("%s-%s-%s", userId, expire, salt);
     }
 }

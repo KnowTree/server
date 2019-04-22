@@ -1,5 +1,6 @@
 package system.property;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListProperty<V> extends Property<List<V>> {
@@ -13,6 +14,15 @@ public class ListProperty<V> extends Property<List<V>> {
             return (List<V>) obj;
         }
         throw new Error(CANNOT_PARSE);
+    }
+
+    @Override
+    public List<String> createLabels(List<V> value) {
+        List<String> result = new ArrayList<>();
+        for (V item : value) {
+            result.add(key + ":" + item.toString());
+        }
+        return result;
     }
 
 }

@@ -1,5 +1,10 @@
 package system.property;
 
+import org.json.JSONObject;
+import system.fields.FieldMap;
+
+import java.util.List;
+
 public abstract class Property<T> {
     public static final String CANNOT_PARSE = "Can not parse value";
     String key;
@@ -28,4 +33,9 @@ public abstract class Property<T> {
      * @return T
      */
     public abstract T acceptValue(Object obj);
+
+    /*
+        use for search to reduce number of index composition
+     */
+    public abstract List<String> createLabels(T value);
 }

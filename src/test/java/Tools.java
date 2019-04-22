@@ -1,8 +1,13 @@
+import datastore.DatastoreController;
+import kinds.User;
+import kinds.fields.HasUrl;
+import kinds.fields.IsAdmin;
 import org.json.JSONObject;
 import org.junit.Test;
 import system.fields.HasCredential;
 import system.fields.HasId;
 import system.fields.HasName;
+import utils.Commons;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,6 +16,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
 public class Tools {
@@ -18,15 +24,16 @@ public class Tools {
     final static String API_VERSION = "0";
     final static String LOCALHOST = "http://localhost:8080";
 
-    public static void main(String... args) throws IOException {
+    public static void main(String... args) throws IOException, NoSuchAlgorithmException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put(HasName.first_name.key(), "Test B");
-        jsonObject.put(HasName.last_name.key(), "Rich");
-        jsonObject.put(HasCredential.username.key(), "username");
-        jsonObject.put(HasCredential.password.key(), "password");
-        //createEntity(LOCALHOST, "user", jsonObject);
+        jsonObject.put(HasUrl.title.key(), "Title 1");
+        jsonObject.put(HasUrl.url.key(), "www.example.com");
+        //jsonObject.put(HasCredential.username.key(), "username");
+        //jsonObject.put(HasCredential.password.key(), "password");
         //updateEntity(LOCALHOST, "user", 3L, jsonObject);
         //deleteEntity(LOCALHOST, "user", 3L);
+        //createEntity(LOCALHOST, "knode", jsonObject);
+        createSystemUser();
 
     }
     public static void createEntity(String host, String kind, JSONObject data) throws IOException {
@@ -82,5 +89,16 @@ public class Tools {
 
         //print result
         System.out.println(response.toString());
+    }
+
+    public static void createSystemUser() throws NoSuchAlgorithmException {
+        String username = "root";
+        String password = "pppppp";
+        String hash = Commons.byteToHex(Commons.hash(password));
+        User user = new User();
+        user.set(IsAdmin.is_system, true);
+        user.set(HasCredential.username, user);
+        user.set(HasCredential.password, hash);
+        new DatastoreController().create("User", user.getJsonObject());
     }
 }

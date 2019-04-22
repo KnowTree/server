@@ -1,5 +1,6 @@
 package system.configurations;
 
+import system.DataFactory;
 import system.acl.ACL;
 import system.fields.FieldMap;
 
@@ -7,6 +8,7 @@ public class Configuration {
     SystemConfiguration systemConfiguration;
     FieldMap fieldMap;
     ACL acl;
+    DataFactory dataFactory;
 
 
     public static Configuration instance;
@@ -18,7 +20,7 @@ public class Configuration {
     }
 
     private Configuration() {
-        fieldMap = new FieldMap();
+
     }
 
     public Configuration setSystemConfiguration(SystemConfiguration cf) {
@@ -35,6 +37,18 @@ public class Configuration {
 
     public FieldMap fieldMap() {
         return this.fieldMap;
+    }
+
+    public void setFieldMap(FieldMap fieldMap) {
+        this.fieldMap = fieldMap;
+    }
+
+    public DataFactory dataFactory() {
+        return this.dataFactory;
+    }
+
+    public void setDataFactory(DataFactory dataFactory) {
+        this.dataFactory = dataFactory;
     }
 
     public ACL getAcl() {

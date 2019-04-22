@@ -35,7 +35,7 @@ public class KNode extends Data {
 
     @Override
     public boolean canCreate(Data currentUser, Data data, RestApiFormat urlParser) {
-        return currentUser != null;
+       return currentUser != null;
     }
 
     @Override
@@ -51,5 +51,20 @@ public class KNode extends Data {
     public KNode setUrl(String url) {
         set(HasUrl.url, url);
         return this;
+    }
+
+    @Override
+    public Property[] fields() {
+        return new Property[] {HasUrl.url, HasUrl.title, HasId.id};
+    }
+
+    @Override
+    public Property[] labelFields() {
+        return new Property[] {HasUrl.title, HasId.id};
+    }
+
+    @Override
+    public List<String> addCustomLabels() {
+        return null;
     }
 }

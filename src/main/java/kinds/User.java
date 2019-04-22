@@ -3,13 +3,15 @@ package kinds;
 import kinds.fields.IsAdmin;
 import kinds.fields.IsClient;
 import org.json.JSONObject;
+import servlets.ErrorHandler;
 import system.configurations.Configuration;
 import system.Data;
-import system.fields.FieldMap;
-import system.fields.HasCredential;
-import system.fields.HasId;
+import system.fields.*;
+import system.property.Property;
+import utils.Commons;
 import utils.RestApiFormat;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -48,6 +50,13 @@ public class User extends Data {
     @Override
     public boolean canCreate(Data currentUser, Data data, RestApiFormat urlParser) {
         boolean hasCredential = data.containProperties(HasCredential.username, HasCredential.password);
+        try {
+            String hash = Commons.byteToHex(Commons.hash(data.getString(HasCredential.password)));
+            data.set(HasCredential.password, hash);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return false;
+        }
         if (currentUser == null) return hasCredential;
         else {
             User user = (User) currentUser;
@@ -61,5 +70,23 @@ public class User extends Data {
         else {
             return ((User) currentUser).isAdmin() && !data.id().equals(currentUser.id());
         }
+    }
+
+    @Override
+    public Property[] fields() {
+        return new Property[] {HasCredential.username, HasCredential.password, HasEmail.email, HasId.id,
+                HasTracking.created_date, HasName.first_name, HasName.last_name, HasName.middle_name,
+        IsAdmin.is_admin, IsClient.is_client, IsAdmin.is_system};
+    }
+
+    @Override
+    public Property[] labelFields() {
+        return new Property[] {HasEmail.email, HasId.id, HasName.first_name, HasName.last_name, HasName.middle_name,
+        IsAdmin.is_admin, IsClient.is_client, IsAdmin.is_system};
+    }
+
+    @Override
+    public List<String> addCustomLabels() {
+        return null;
     }
 }

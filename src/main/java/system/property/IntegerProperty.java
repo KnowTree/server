@@ -1,5 +1,9 @@
 package system.property;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class IntegerProperty extends Property<Integer> {
     public IntegerProperty(String key) {
         super(key);
@@ -17,6 +21,11 @@ public class IntegerProperty extends Property<Integer> {
             return ((Double) obj).intValue();
         }
         throw new Error(CANNOT_PARSE);
+    }
+
+    @Override
+    public List<String> createLabels(Integer value) {
+        return Collections.singletonList(key + ":" + value.toString());
     }
 
 }

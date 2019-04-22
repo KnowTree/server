@@ -1,5 +1,11 @@
 package system.property;
 
+import org.json.JSONObject;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class DoubleProperty extends Property<Double> {
     public DoubleProperty(String key) {
         super(key);
@@ -19,4 +25,8 @@ public class DoubleProperty extends Property<Double> {
         throw new Error(CANNOT_PARSE);
     }
 
+    @Override
+    public List<String> createLabels(Double value) {
+        return Collections.singletonList(key + ":" + value.toString());
+    }
 }

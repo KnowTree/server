@@ -2,10 +2,11 @@ package system;
 
 import servlets.RestEntity;
 import system.configurations.Configuration;
+import system.fields.CanSearch;
+import system.fields.FieldMap;
 import system.property.Property;
 import org.json.JSONObject;
 import system.fields.HasId;
-import utils.RestApiFormat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,8 @@ public abstract class Data implements RestEntity {
         jsonObject = new JSONObject();
         this.kind = kind;
     }
+
+    public abstract Property[] fields();
 
     public String getKind() {
         return this.kind;
@@ -44,7 +47,7 @@ public abstract class Data implements RestEntity {
         return this;
     }
 
-    public Data retrieve(List<Property> props) throws Exception {
+    public final Data retrieve(List<Property> props) throws Exception {
         Long id = getLong(HasId.id);
         if (props == null) props = Configuration.getInstance().fieldMap().getFields(getKind());
         jsonObject = dataController.get(getKind(), id, props);
@@ -59,20 +62,22 @@ public abstract class Data implements RestEntity {
         return retrieve(fields);
     }
 
-    public Data create() throws Exception {
+    public final Data create() throws Exception {
         JSONObject result = dataController.create(getKind(), jsonObject);
         jsonObject = result;
+        createLabel();
         return this;
     }
 
-    public Data update() throws Exception {
+    public final Data update() throws Exception {
         Long id = getLong(HasId.id);
         JSONObject result = dataController.update(getKind(), id, jsonObject);
         jsonObject = result;
+        createLabel();
         return this;
     }
 
-    public boolean delete() throws Exception {
+    public final boolean delete() throws Exception {
         Long id = getLong(HasId.id);
         return dataController.delete(getKind(), id);
     }
@@ -112,6 +117,21 @@ public abstract class Data implements RestEntity {
     public Long id() {
         return getLong(HasId.id);
     };
+
+    public final void createLabel() {
+        List<String> result = new ArrayList<>();
+        Property[] labelFields = labelFields();
+        for (Property field : labelFields) {
+            Object value = get(field);
+            result.addAll(field.createLabels(value));
+        }
+        result.addAll(addCustomLabels());
+        set(CanSearch.labels, result);
+    }
+
+    public abstract Property[] labelFields();
+
+    public abstract List<String> addCustomLabels();
     @Override
     public String toString() {
         return jsonObject.toString();
