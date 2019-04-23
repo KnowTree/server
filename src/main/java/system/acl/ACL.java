@@ -11,4 +11,8 @@ import java.util.List;
 public interface ACL {
 
     Data retrieveCurrentUserData(AccessToken accessToken);
+
+    Data newUser(String username, String password);
+
+    Data findUser(String username, String password);
 }

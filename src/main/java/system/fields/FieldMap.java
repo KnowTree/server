@@ -42,4 +42,8 @@ public class FieldMap {
     public Property get(String key) {
         return map.get(key);
     }
+
+    public Property get(String kind, String propName) {
+        return map.get(kind +"." + propName);
+    }
 }

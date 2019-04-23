@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import system.Data;
 import system.DatabaseController;
 import system.configurations.Configuration;
+import system.fields.CanSearch;
 import system.fields.HasId;
 import system.fields.HasTracking;
 import system.property.Property;
@@ -55,7 +56,7 @@ public class KNode extends Data {
 
     @Override
     public Property[] fields() {
-        return new Property[] {HasUrl.url, HasUrl.title, HasId.id};
+        return new Property[] {HasUrl.url, HasUrl.title, HasId.id, CanSearch.labels};
     }
 
     @Override

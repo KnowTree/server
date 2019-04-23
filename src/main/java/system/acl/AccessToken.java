@@ -13,11 +13,11 @@ import java.util.Date;
 public class AccessToken {
     public static final String KNOWTREE_SALT_ENV = "knowtree_salt";
     Long userId;
-    Date expireDate;
+    Long expireDate;
     String hash;
-    public AccessToken(Long userId, Date expireDate) throws NoSuchAlgorithmException {
+    public AccessToken(Long userId, Long expireDateTimeStamp) throws NoSuchAlgorithmException {
         this.userId = userId;
-        this.expireDate = expireDate;
+        this.expireDate = expireDateTimeStamp;
         hash = calculateHash();
     }
 
@@ -25,7 +25,7 @@ public class AccessToken {
         String[] args = msg.split("-");
         if (args.length == 3) {
             this.userId = Long.valueOf(args[0]);
-            this.expireDate = new Date(Long.valueOf(args[1]));
+            this.expireDate = Long.valueOf(args[1]);
             this.hash = args[2];
         }
     }
@@ -49,12 +49,16 @@ public class AccessToken {
 
     private String calculateHash() throws NoSuchAlgorithmException {
         String salt = System.getenv(KNOWTREE_SALT_ENV);
-        String msg = getHashMessage(userId, expireDate.getTime(), salt);
+        String msg = getHashMessage(userId, expireDate, salt);
         byte[] hashInBytes = Commons.hash(msg);
         return Commons.byteToHex(hashInBytes);
     }
 
     public static String getHashMessage(Long userId, Long expire, String salt) {
         return String.format("%s-%s-%s", userId, expire, salt);
+    }
+
+    public String getTokenString() {
+        return String.format("%s-%s-%s", userId, expireDate, hash);
     }
 }

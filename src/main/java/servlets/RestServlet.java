@@ -59,7 +59,7 @@ public abstract class RestServlet extends HttpServlet {
         try {
             data.retrieve(null);
             if (canUpdate((Data) req.getAttribute(RequestHeaders.CURRENT_USER), data, jsonObject, urlParser)) {
-                data.setJSONObject(jsonObject);
+                data.copyFromJSON(jsonObject);
                 data.update();
             } else {
                 ErrorHandler.handle(req, resp, ErrorCodes.UNAUTHORIZED_ACTION, "Not allow to update");

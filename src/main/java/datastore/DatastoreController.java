@@ -1,21 +1,21 @@
 package datastore;
 
 import com.google.appengine.api.datastore.*;
+import org.json.JSONArray;
 import system.Data;
 import system.DataFactory;
 import system.configurations.Configuration;
 import system.fields.CanSearch;
 import system.fields.FieldMap;
-import system.property.IntegerProperty;
-import system.property.LongProperty;
-import system.property.Property;
-import system.property.StringProperty;
+import system.property.*;
 import org.json.JSONObject;
 import system.DatabaseController;
 import system.fields.HasId;
+import utils.QueryData;
 import utils.SearchData;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -26,15 +26,11 @@ public class DatastoreController implements DatabaseController {
 
     }
 
-    public static Entity buildEntityFromJSONObject(Key key, JSONObject data) {
+    public static Entity buildEntityFromJSONObject(Key key, String kind, JSONObject data) {
         Entity entity = new Entity(key);
         for (String fieldName : data.keySet()) {
-            Object obj = data.get(fieldName);
-            if (obj instanceof String) {
-                entity.setProperty(fieldName, data.getString(fieldName));
-            } else if (obj instanceof Long) {
-                entity.setProperty(fieldName, data.getLong(fieldName));
-            }
+            Property property = Configuration.getInstance().fieldMap().get(kind, fieldName);
+            entity.setProperty(fieldName, property.acceptValue(data.get(fieldName)));
         }
         return entity;
     }
@@ -51,7 +47,7 @@ public class DatastoreController implements DatabaseController {
     @Override
     public JSONObject create(String kind, JSONObject data) {
         Key key = datastore.allocateIds(kind, 1).getStart();
-        Entity entity = buildEntityFromJSONObject(key, data);
+        Entity entity = buildEntityFromJSONObject(key,kind, data);
         datastore.put(entity);
         return data.put(HasId.id.key(), key.getId());
     }
@@ -59,7 +55,7 @@ public class DatastoreController implements DatabaseController {
     @Override
     public JSONObject update(String kind, Long id, JSONObject updateData) {
         Key key = KeyFactory.createKey(kind, id);
-        Entity entity = buildEntityFromJSONObject(key, updateData);
+        Entity entity = buildEntityFromJSONObject(key, kind, updateData);
         datastore.put(entity);
         return updateData;
     }
@@ -87,17 +83,17 @@ public class DatastoreController implements DatabaseController {
 
     @Override
     public List<Data> search(SearchData searchApiData) {
-        List<SearchData.QueryData> queryDataList = searchApiData.getQueryDataList();
+        List<QueryData> queryDataList = searchApiData.getQueryDataList();
         List<String> labels = new ArrayList<>();
-        for (SearchData.QueryData queryData : queryDataList) {
+        for (QueryData queryData : queryDataList) {
             String ops = queryData.getOperator();
             Query.FilterOperator filterOperator;
-            Property field = CanSearch.labels;
+            Property field = Configuration.getInstance().fieldMap().get(searchApiData.getKind(), queryData.getField());
             labels.addAll(field.createLabels(queryData.getValue()));
         }
 
         Query.FilterPredicate filterPredicate =
-                new Query.FilterPredicate(searchApiData.getKind(), Query.FilterOperator.EQUAL, labels);
+                new Query.FilterPredicate(CanSearch.labels.key(), Query.FilterOperator.EQUAL, labels);
 
         Query query = new Query(searchApiData.getKind()).setFilter(filterPredicate);
 

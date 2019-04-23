@@ -29,7 +29,7 @@ public abstract class Data implements RestEntity {
 
     public Object get(Property field) {
         String fieldName = field.key();
-        return jsonObject.get(fieldName);
+        return jsonObject.has(fieldName) ? jsonObject.get(fieldName) : null;
     }
 
     public Long getLong(Property<Long> property) {
@@ -63,9 +63,9 @@ public abstract class Data implements RestEntity {
     }
 
     public final Data create() throws Exception {
+        createLabel();
         JSONObject result = dataController.create(getKind(), jsonObject);
         jsonObject = result;
-        createLabel();
         return this;
     }
 
@@ -73,7 +73,6 @@ public abstract class Data implements RestEntity {
         Long id = getLong(HasId.id);
         JSONObject result = dataController.update(getKind(), id, jsonObject);
         jsonObject = result;
-        createLabel();
         return this;
     }
 
@@ -84,6 +83,14 @@ public abstract class Data implements RestEntity {
 
     public Data setJSONObject(JSONObject jsonObject) {
         this.jsonObject = jsonObject;
+        return this;
+    }
+
+    public Data copyFromJSON(JSONObject jsonObject) {
+        for (String key : jsonObject.keySet()) {
+            this.jsonObject.put(key, jsonObject.get(key));
+        }
+        createLabel();
         return this;
     }
 
@@ -123,9 +130,14 @@ public abstract class Data implements RestEntity {
         Property[] labelFields = labelFields();
         for (Property field : labelFields) {
             Object value = get(field);
-            result.addAll(field.createLabels(value));
+            if (value != null) {
+                result.addAll(field.createLabels(value));
+            }
         }
-        result.addAll(addCustomLabels());
+        List<String> morelabels = addCustomLabels();
+        if (morelabels != null) {
+            result.addAll(morelabels);
+        }
         set(CanSearch.labels, result);
     }
 

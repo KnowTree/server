@@ -76,13 +76,13 @@ public class User extends Data {
     public Property[] fields() {
         return new Property[] {HasCredential.username, HasCredential.password, HasEmail.email, HasId.id,
                 HasTracking.created_date, HasName.first_name, HasName.last_name, HasName.middle_name,
-        IsAdmin.is_admin, IsClient.is_client, IsAdmin.is_system};
+        IsAdmin.is_admin, IsClient.is_client, IsAdmin.is_system, CanSearch.labels};
     }
 
     @Override
     public Property[] labelFields() {
         return new Property[] {HasEmail.email, HasId.id, HasName.first_name, HasName.last_name, HasName.middle_name,
-        IsAdmin.is_admin, IsClient.is_client, IsAdmin.is_system};
+        IsAdmin.is_admin, IsClient.is_client, IsAdmin.is_system, HasCredential.username};
     }
 
     @Override

@@ -1,3 +1,4 @@
+import com.google.appengine.tools.remoteapi.RemoteApiInstaller;
 import datastore.DatastoreController;
 import kinds.User;
 import kinds.fields.HasUrl;
@@ -25,15 +26,7 @@ public class Tools {
     final static String LOCALHOST = "http://localhost:8080";
 
     public static void main(String... args) throws IOException, NoSuchAlgorithmException {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put(HasUrl.title.key(), "Title 1");
-        jsonObject.put(HasUrl.url.key(), "www.example.com");
-        //jsonObject.put(HasCredential.username.key(), "username");
-        //jsonObject.put(HasCredential.password.key(), "password");
-        //updateEntity(LOCALHOST, "user", 3L, jsonObject);
-        //deleteEntity(LOCALHOST, "user", 3L);
-        //createEntity(LOCALHOST, "knode", jsonObject);
-        createSystemUser();
+        login("root", "pppppp");
 
     }
     public static void createEntity(String host, String kind, JSONObject data) throws IOException {
@@ -51,7 +44,7 @@ public class Tools {
         send("DELETE", path, null, null);
     }
 
-    public static void send(String method, String url, Map<String, String> headers, String rawPayload) throws IOException {
+    public static String send(String method, String url, Map<String, String> headers, String rawPayload) throws IOException {
         URL path = new URL(url);
         HttpURLConnection httpURLConnection = (HttpURLConnection) path.openConnection();
         httpURLConnection.setRequestMethod(method);
@@ -89,9 +82,11 @@ public class Tools {
 
         //print result
         System.out.println(response.toString());
+        return response.toString();
     }
 
     public static void createSystemUser() throws NoSuchAlgorithmException {
+        RemoteApiInstaller remoteApiInstaller = new RemoteApiInstaller();
         String username = "root";
         String password = "pppppp";
         String hash = Commons.byteToHex(Commons.hash(password));
@@ -101,4 +96,22 @@ public class Tools {
         user.set(HasCredential.password, hash);
         new DatastoreController().create("User", user.getJsonObject());
     }
+
+    public static void register(String username, String password) throws IOException {
+        String path = String.format("%s/%s/%s", LOCALHOST, API_PREFIX, "register");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", username);
+        jsonObject.put("password", password);
+        send("POST", path, null, jsonObject.toString());
+    }
+
+    public static JSONObject login(String username, String password) throws IOException {
+        String path = String.format("%s/%s/%s", LOCALHOST, API_PREFIX, "login");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", username);
+        jsonObject.put("password", password);
+        return new JSONObject(send("POST", path, null, jsonObject.toString()));
+    }
+
+
 }
