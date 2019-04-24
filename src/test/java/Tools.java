@@ -5,7 +5,9 @@ import kinds.fields.HasUrl;
 import kinds.fields.IsAdmin;
 import org.json.JSONObject;
 import org.junit.Test;
+import servlets.RequestHeaders;
 import system.fields.HasCredential;
+import system.fields.HasEmail;
 import system.fields.HasId;
 import system.fields.HasName;
 import utils.Commons;
@@ -18,6 +20,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Tools {
@@ -26,7 +29,18 @@ public class Tools {
     final static String LOCALHOST = "http://localhost:8080";
 
     public static void main(String... args) throws IOException, NoSuchAlgorithmException {
-        login("root", "pppppp");
+        JSONObject loginResult = login("root", "pppppp");
+        Map<String, String> header = new HashMap<>();
+        header.put(RequestHeaders.TOKEN, loginResult.getString("token"));
+        JSONObject payload = new JSONObject();
+        payload.put(HasEmail.email.key(), "root@test.com");
+        payload.put(HasName.first_name.key(), "Root");
+        payload.put(HasName.last_name.key(), "Admin");
+        payload.put(IsAdmin.is_system.key(), true);
+        payload.put(IsAdmin.is_system.key(), true);
+        JSONObject result = updateEntity(LOCALHOST, "User", loginResult.getLong(HasId.id.key()), header, payload);
+
+
 
     }
     public static void createEntity(String host, String kind, JSONObject data) throws IOException {
@@ -34,9 +48,9 @@ public class Tools {
         send("PUT", path, null, data.toString());
     }
 
-    public static void updateEntity(String host, String kind, Long id, JSONObject updateData) throws IOException {
+    public static JSONObject updateEntity(String host, String kind, Long id, Map<String, String> headers, JSONObject updateData) throws IOException {
         String path = String.format("%s/%s/%s/%s/%s", host, API_PREFIX, API_VERSION, kind, id);
-        send("POST", path, null, updateData.toString());
+        return new JSONObject(send("POST", path, headers, updateData.toString()));
     }
 
     public static void deleteEntity(String host, String kind, Long id) throws IOException {
@@ -67,7 +81,7 @@ public class Tools {
         }
 
         int responseCode = httpURLConnection.getResponseCode();
-        System.out.println("\nSending 'GET' request to URL : " + url);
+        System.out.println("\nSending " + method + " request to URL : " + url);
         System.out.println("Response Code : " + responseCode);
 
         BufferedReader in = new BufferedReader(

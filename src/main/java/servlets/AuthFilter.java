@@ -29,7 +29,7 @@ public class AuthFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         Data currentUser = null;
         ACL acl = Configuration.getInstance().getAcl();
-        String token = (String) request.getAttribute(RequestHeaders.TOKEN);
+        String token = ((HttpServletRequest) request).getHeader(RequestHeaders.TOKEN);
         if (token == null) {
             if (isLoginPath((HttpServletRequest) request)) {
                 new LoginServlet().doPost((HttpServletRequest) request, (HttpServletResponse) response);

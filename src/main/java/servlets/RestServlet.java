@@ -56,11 +56,14 @@ public abstract class RestServlet extends HttpServlet {
         JSONObject jsonObject = new JSONObject(payloadRaw);
         Data data = Configuration.getInstance().dataFactory().create(urlParser.getKind());
         data.set(HasId.id, urlParser.getId());
+        Data currentUser = (Data) req.getAttribute(RequestHeaders.CURRENT_USER);
         try {
             data.retrieve(null);
-            if (canUpdate((Data) req.getAttribute(RequestHeaders.CURRENT_USER), data, jsonObject, urlParser)) {
+            if (canUpdate(currentUser, data, jsonObject, urlParser)) {
                 data.copyFromJSON(jsonObject);
                 data.update();
+                data.canGet(currentUser, data, urlParser);
+                resp.getWriter().write(data.toString());
             } else {
                 ErrorHandler.handle(req, resp, ErrorCodes.UNAUTHORIZED_ACTION, "Not allow to update");
             }
@@ -110,6 +113,7 @@ public abstract class RestServlet extends HttpServlet {
             data.retrieve(null);
             if (canDelete((Data) req.getAttribute(RequestHeaders.CURRENT_USER), data, urlParser)) {
                 data.delete();
+                resp.getWriter().write(data.toString());
             } else {
                 ErrorHandler.handle(req, resp, ErrorCodes.UNAUTHORIZED_ACTION, "Not allow to delete");
             }

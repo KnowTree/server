@@ -14,7 +14,7 @@ public class KnowTreeDataFactory extends DataFactory {
 
     @Override
     public Data create(String kind) {
-        switch (kind) {
+        switch (kind.toLowerCase()) {
             case "user" :
                 return new User();
             case "knode" :

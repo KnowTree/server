@@ -30,7 +30,9 @@ public class DatastoreController implements DatabaseController {
         Entity entity = new Entity(key);
         for (String fieldName : data.keySet()) {
             Property property = Configuration.getInstance().fieldMap().get(kind, fieldName);
-            entity.setProperty(fieldName, property.acceptValue(data.get(fieldName)));
+            if (data.has(fieldName)) {
+                entity.setProperty(fieldName, property.acceptValue(data.get(fieldName)));
+            }
         }
         return entity;
     }
@@ -38,7 +40,9 @@ public class DatastoreController implements DatabaseController {
     public static JSONObject entityToJSONObject(Entity entity, List<Property> fields) {
         JSONObject json = new JSONObject();
         for (Property field : fields) {
-            json.put(field.key(), field.acceptValue(entity.getProperty(field.key())));
+            if (entity.hasProperty(field.key())) {
+                json.put(field.key(), field.acceptValue(entity.getProperty(field.key())));
+            }
         }
         json.put(HasId.id.key(), entity.getKey().getId());
         return json;
@@ -84,18 +88,25 @@ public class DatastoreController implements DatabaseController {
     @Override
     public List<Data> search(SearchData searchApiData) {
         List<QueryData> queryDataList = searchApiData.getQueryDataList();
-        List<String> labels = new ArrayList<>();
+
+        List<Query.Filter> filterPredicates = new ArrayList<>();
         for (QueryData queryData : queryDataList) {
-            String ops = queryData.getOperator();
-            Query.FilterOperator filterOperator;
             Property field = Configuration.getInstance().fieldMap().get(searchApiData.getKind(), queryData.getField());
-            labels.addAll(field.createLabels(queryData.getValue()));
+            String value = (String) field.createLabels(queryData.getValue()).get(0);
+            Query.FilterPredicate filterPredicate =
+                    new Query.FilterPredicate(CanSearch.labels.key(), Query.FilterOperator.EQUAL, value);
+            filterPredicates.add(filterPredicate);
         }
 
-        Query.FilterPredicate filterPredicate =
-                new Query.FilterPredicate(CanSearch.labels.key(), Query.FilterOperator.EQUAL, labels);
-
-        Query query = new Query(searchApiData.getKind()).setFilter(filterPredicate);
+        Query query;
+        if (filterPredicates.size() == 1) {
+            query = new Query(searchApiData.getKind()).setFilter(filterPredicates.get(0));
+        } else if (filterPredicates.size() > 1){
+            Query.CompositeFilter compositeFilter = new Query.CompositeFilter(Query.CompositeFilterOperator.AND, filterPredicates);
+            query = new Query(searchApiData.getKind()).setFilter(compositeFilter);
+        } else {
+            return new ArrayList<>();
+        }
 
         PreparedQuery preparedQuery = datastore.prepare(query);
         List<Entity> entities = preparedQuery.asList(FetchOptions.Builder.withLimit(100));

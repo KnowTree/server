@@ -96,6 +96,13 @@
             <version>1.9.73</version>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.appengine/appengine-remote-api -->
+        <dependency>
+            <groupId>com.google.appengine</groupId>
+            <artifactId>appengine-remote-api</artifactId>
+            <version>1.9.73</version>
+        </dependency>
+
 
         <!-- https://mvnrepository.com/artifact/org.mock-server/mockserver-jetty -->
         <dependency>

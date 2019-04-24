@@ -40,8 +40,9 @@ public class LoginServlet extends HttpServlet {
                 try {
                     AccessToken accessToken = new AccessToken(userId, zonedDateTime.toInstant().toEpochMilli());
                     String token = accessToken.getTokenString();
-                    JSONObject result = new JSONObject();
-                    result.put("token", token);
+                    JSONObject result = user.getJsonObject();
+                    result.remove(HasCredential.password.key());
+                    result.put(HasCredential.token.key(), token);
                     resp.getWriter().write(result.toString());
                 } catch (NoSuchAlgorithmException e) {
                     e.printStackTrace();

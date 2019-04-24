@@ -61,11 +61,16 @@ public class KnowTreeACL implements ACL {
         SearchData searchData = new SearchData();
         searchData.setKind("User");
         QueryData<String> usernameQuery = new QueryData<>(HasCredential.username.key(), "EQUAL", username);
-        QueryData<String> passwordQuery = new QueryData<>(HasCredential.password.key(), "EQUAL", hash);
-        searchData.setQueryDataList(Arrays.asList(usernameQuery, passwordQuery));
+        searchData.setQueryDataList(Arrays.asList(usernameQuery));
         List<Data> users = Configuration.getInstance().getSystemConfiguration().getDatabaseController().search(searchData);
         if (users.size() == 0) {
             return null;
-        } else return users.get(0);
+        } else {
+            if (hash.equals(users.get(0).getString(HasCredential.password))) {
+                return users.get(0);
+            } else {
+                return null;
+            }
+        }
     }
 }
