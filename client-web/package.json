@@ -6,16 +6,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack --mode development",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "hot-reload" : "cp ../web/js/bundle.js ../out/artifacts/knowtreeteam_war_exploded/js/bundle.js"
   },
   "author": "Nguyen Duy Y",
   "license": "ISC",
   "dependencies": {
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "react-redux": "^5.0.7",
     "react-router-dom": "^3.0.5",
-    "redux": "^3.5.2",
     "validate.js": "^0.12.0"
   },
   "devDependencies": {

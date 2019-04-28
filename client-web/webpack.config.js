@@ -1,4 +1,9 @@
+var path = require("path");
 module.exports = {
+    output : {
+        path : path.resolve(__dirname, "../web/js"),
+        filename : "bundle.js"
+    },
     module: {
         rules: [
             {
