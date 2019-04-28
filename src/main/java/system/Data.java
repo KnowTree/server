@@ -14,9 +14,7 @@ import java.util.List;
 public abstract class Data implements RestEntity {
     String kind;
     JSONObject jsonObject;
-    DatabaseController dataController;
-    public Data(String kind, DatabaseController dataController) {
-        this.dataController = dataController;
+    public Data(String kind) {
         jsonObject = new JSONObject();
         this.kind = kind;
     }
@@ -50,7 +48,7 @@ public abstract class Data implements RestEntity {
     public final Data retrieve(List<Property> props) throws Exception {
         Long id = getLong(HasId.id);
         if (props == null) props = Configuration.getInstance().fieldMap().getFields(getKind());
-        jsonObject = dataController.get(getKind(), id, props);
+        jsonObject = Configuration.getInstance().getSystemConfiguration().getDatabaseController().get(getKind(), id, props);
         return this;
     }
 
@@ -64,21 +62,21 @@ public abstract class Data implements RestEntity {
 
     public final Data create() throws Exception {
         createLabel();
-        JSONObject result = dataController.create(getKind(), jsonObject);
+        JSONObject result = Configuration.getInstance().getSystemConfiguration().getDatabaseController().create(getKind(), jsonObject);
         jsonObject = result;
         return this;
     }
 
     public final Data update() throws Exception {
         Long id = getLong(HasId.id);
-        JSONObject result = dataController.update(getKind(), id, jsonObject);
+        JSONObject result = Configuration.getInstance().getSystemConfiguration().getDatabaseController().update(getKind(), id, jsonObject);
         jsonObject = result;
         return this;
     }
 
     public final boolean delete() throws Exception {
         Long id = getLong(HasId.id);
-        return dataController.delete(getKind(), id);
+        return Configuration.getInstance().getSystemConfiguration().getDatabaseController().delete(getKind(), id);
     }
 
     public Data setJSONObject(JSONObject jsonObject) {

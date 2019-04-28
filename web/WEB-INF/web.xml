@@ -27,7 +27,7 @@
 
     <filter>
         <filter-name>AuthFilter</filter-name>
-        <filter-class>servlets.AuthFilter</filter-class>
+        <filter-class>KnowTreeAuthFilter</filter-class>
     </filter>
 
     <filter-mapping>
@@ -39,12 +39,22 @@
 
     <servlet>
         <servlet-name>search</servlet-name>
-        <servlet-class>SearchServlet</servlet-class>
+        <servlet-class>KnowTreeSearchServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>search</servlet-name>
         <url-pattern>/search/*</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>webapp</servlet-name>
+        <servlet-class>KnowTreeWebAppServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>webapp</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+
 
 </web-app>

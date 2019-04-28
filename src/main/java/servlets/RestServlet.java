@@ -17,14 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 
-public abstract class RestServlet extends HttpServlet {
+public abstract class RestServlet extends BaseServlet {
     protected Configuration configuration;
-
-    @Override
-    public void init() throws ServletException {
-        super.init();
-        configuration = Configuration.getInstance();;
-    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

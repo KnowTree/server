@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Token extends Data {
     public Token() {
-        super("Token", Configuration.getInstance().getSystemConfiguration().getDatabaseController());
+        super("Token");
     }
 
     @Override //login

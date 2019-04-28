@@ -9,17 +9,21 @@ public class Configuration {
     FieldMap fieldMap;
     ACL acl;
     DataFactory dataFactory;
+    String appName;
 
 
     public static Configuration instance;
+
     public static Configuration getInstance() {
-        if (instance == null) {
-            instance = new Configuration();
-        }
         return instance;
     }
 
-    private Configuration() {
+    public static Configuration setInstance(Configuration cf) {
+        instance = cf;
+        return instance;
+    }
+
+    protected Configuration() {
 
     }
 
@@ -54,4 +58,11 @@ public class Configuration {
     public ACL getAcl() {
         return this.acl;
     }
+
+    public Configuration setAppName(String name) {
+        this.appName = name;
+        return this;
+    }
+
+    public String getAppName() {return this.appName;}
 }

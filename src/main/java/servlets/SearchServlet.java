@@ -1,3 +1,5 @@
+package servlets;
+
 import org.json.JSONObject;
 import servlets.RequestHeaders;
 import system.Data;
@@ -14,7 +16,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class SearchServlet extends HttpServlet {
+public abstract class SearchServlet extends BaseServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

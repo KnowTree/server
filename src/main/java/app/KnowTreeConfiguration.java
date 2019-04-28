@@ -1,17 +1,20 @@
 package app;
 
-import system.configurations.SystemConfiguration;
-import datastore.DatastoreController;
-import system.DatabaseController;
+import system.configurations.Configuration;
 
-public class KnowTreeConfiguration implements SystemConfiguration {
-    DatabaseController databaseController;
-    public KnowTreeConfiguration() {
-        databaseController = new DatastoreController();
+public class KnowTreeConfiguration extends Configuration {
+
+    public static Configuration getInstance() {
+        if (instance == null) instance = new KnowTreeConfiguration();
+        return instance;
     }
 
-    @Override
-    public DatabaseController getDatabaseController() {
-        return databaseController;
+    private KnowTreeConfiguration() {
+        super();
+        setAppName("KnowTree");
+        setSystemConfiguration(new KnowTreeSystemConfiguration());
+        setACL(new KnowTreeACL());
+        setFieldMap(new KnowTreeFieldMap());
+        setDataFactory(new KnowTreeDataFactory());
     }
 }

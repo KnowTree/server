@@ -1,10 +1,11 @@
 import app.*;
-import servlets.RestServlet;
+import servlets.SearchServlet;
 import system.configurations.Configuration;
 
 import javax.servlet.ServletException;
 
-public class KnowTreeRestServlet extends RestServlet {
+public class KnowTreeSearchServlet extends SearchServlet {
+
     @Override
     public Configuration getConfiguration() {
         return KnowTreeConfiguration.getInstance();

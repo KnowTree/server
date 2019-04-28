@@ -18,7 +18,7 @@ import java.util.List;
 public class KNode extends Data {
 
     public KNode() {
-        super("Knode", Configuration.getInstance().getSystemConfiguration().getDatabaseController());
+        super("Knode");
     }
 
     @Override

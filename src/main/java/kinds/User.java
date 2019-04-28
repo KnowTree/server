@@ -17,7 +17,7 @@ import java.util.List;
 
 public class User extends Data {
     public User() {
-        super("User", Configuration.getInstance().getSystemConfiguration().getDatabaseController());
+        super("User");
     }
 
     public boolean isAdmin() {

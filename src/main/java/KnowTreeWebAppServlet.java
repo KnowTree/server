@@ -1,10 +1,8 @@
-import app.*;
-import servlets.RestServlet;
+import app.KnowTreeConfiguration;
+import servlets.WebAppServlet;
 import system.configurations.Configuration;
 
-import javax.servlet.ServletException;
-
-public class KnowTreeRestServlet extends RestServlet {
+public class KnowTreeWebAppServlet extends WebAppServlet {
     @Override
     public Configuration getConfiguration() {
         return KnowTreeConfiguration.getInstance();
