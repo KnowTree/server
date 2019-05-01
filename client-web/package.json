@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack --mode development",
-    "build": "webpack --mode production",
+    "build": "webpack --mode development",
+    "build-prod": "webpack --mode production",
     "hot-reload" : "cp ../web/js/bundle.js ../out/artifacts/knowtreeteam_war_exploded/js/bundle.js"
   },
   "author": "Nguyen Duy Y",

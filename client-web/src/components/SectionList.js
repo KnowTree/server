@@ -5,7 +5,7 @@ class SectionList extends React.Component {
         super(props);
         this.state = {sections : [
             {
-                path : "/lessions",
+                path : "/courses",
                 title : "Lessions"
             },
             {
