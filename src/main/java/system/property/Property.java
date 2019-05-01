@@ -37,5 +37,5 @@ public abstract class Property<T> {
     /*
         use for search to reduce number of index composition
      */
-    public abstract List<String> createLabels(T value);
+    public abstract List<String> createLabels(Object value);
 }

@@ -24,8 +24,8 @@ public class LongProperty extends Property<Long> {
     }
 
     @Override
-    public List<String> createLabels(Long value) {
-        return Collections.singletonList(key + ":" + value.toString());
+    public List<String> createLabels(Object value) {
+        return Collections.singletonList(key + ":" + acceptValue(value).toString());
     }
 
 }

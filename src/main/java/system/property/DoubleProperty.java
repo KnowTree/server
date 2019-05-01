@@ -26,7 +26,7 @@ public class DoubleProperty extends Property<Double> {
     }
 
     @Override
-    public List<String> createLabels(Double value) {
-        return Collections.singletonList(key + ":" + value.toString());
+    public List<String> createLabels(Object value) {
+        return Collections.singletonList(key + ":" + acceptValue(value).toString());
     }
 }

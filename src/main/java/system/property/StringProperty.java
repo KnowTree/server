@@ -15,8 +15,8 @@ public class StringProperty extends Property<String> {
     }
 
     @Override
-    public List<String> createLabels(String value) {
-        return Arrays.asList(key + ":" + value);
+    public List<String> createLabels(Object value) {
+        return Arrays.asList(key + ":" + acceptValue(value));
     }
 
 }

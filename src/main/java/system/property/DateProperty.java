@@ -31,8 +31,8 @@ public class DateProperty extends Property<Date> {
     }
 
     @Override
-    public List<String> createLabels(Date value) {
-        return Collections.singletonList(key + ":" + String.valueOf(value.getTime()));
+    public List<String> createLabels(Object value) {
+        return Collections.singletonList(key + ":" + String.valueOf(acceptValue(value).getTime()));
     }
 
     public DateProperty format(String format) {

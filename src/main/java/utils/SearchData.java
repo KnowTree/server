@@ -15,7 +15,7 @@ import java.util.*;
 
 public class SearchData {
     String kind;
-    int length, start;
+    int length = 10, start = 0;
     String orderByField;
     boolean asc;
     String cursor;
@@ -74,22 +74,26 @@ public class SearchData {
         String rawPayload = IOUtils.toString(request.getReader());
         JSONArray json = new JSONArray(rawPayload);
         kind = request.getParameter("kind");
-        length = Integer.valueOf(request.getParameter("l"));
-        start = Integer.valueOf(request.getParameter("s"));
+        length = request.getParameter("l") != null ? Integer.valueOf(request.getParameter("l")) : 10;
+        start = request.getParameter("s") != null ? Integer.valueOf(request.getParameter("s")) : 0;
         String order = request.getParameter("o");
-        asc = !order.startsWith("-");
-        if (asc) {
-            orderByField = order;
-        } else {
-            orderByField = order.substring(1);
+        if (order != null) {
+            asc = !order.startsWith("-");
+            if (asc) {
+                orderByField = order;
+            } else {
+                orderByField = order.substring(1);
+            }
         }
         cursor = request.getParameter("cursor");
         queryDataList = parseQueryData(json);
 
         String selectFieldsString = request.getParameter("fields");
-        String[] fieldNames = selectFieldsString.split(",");
-        for (String fieldname : fieldNames) {
-            selectFields.add(Configuration.getInstance().fieldMap().get(fieldname));
+        if (selectFieldsString != null) {
+            String[] fieldNames = selectFieldsString.split(",");
+            for (String fieldname : fieldNames) {
+                selectFields.add(Configuration.getInstance().fieldMap().get(fieldname));
+            }
         }
 
     }

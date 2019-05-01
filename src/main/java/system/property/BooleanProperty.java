@@ -24,8 +24,8 @@ public class BooleanProperty extends Property<Boolean> {
     }
 
     @Override
-    public List<String> createLabels(Boolean value) {
-        return Collections.singletonList(key + ":" + (value ? "true" : "false"));
+    public List<String> createLabels(Object value) {
+        return Collections.singletonList(key + ":" + (acceptValue(value) ? "true" : "false"));
     }
 
 }

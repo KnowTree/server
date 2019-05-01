@@ -85,6 +85,12 @@ public class DatastoreController implements DatabaseController {
         return entityToJSONObject(entity, props);
     }
 
+    /**
+     *
+     * @param searchApiData search by labels field , use all equal filters & cursor
+     *
+     * @return
+     */
     @Override
     public List<Data> search(SearchData searchApiData) {
         List<QueryData> queryDataList = searchApiData.getQueryDataList();
@@ -105,14 +111,22 @@ public class DatastoreController implements DatabaseController {
             Query.CompositeFilter compositeFilter = new Query.CompositeFilter(Query.CompositeFilterOperator.AND, filterPredicates);
             query = new Query(searchApiData.getKind()).setFilter(compositeFilter);
         } else {
-            return new ArrayList<>();
+            query = new Query(searchApiData.getKind());
+        }
+
+        FetchOptions fetchOptions = FetchOptions.Builder.withLimit(searchApiData.getLength());
+        if (searchApiData.getCursor() != null) {
+            fetchOptions.startCursor(Cursor.fromWebSafeString(searchApiData.getCursor()));
+        } else {
+            fetchOptions.offset(searchApiData.getStart());
         }
 
         PreparedQuery preparedQuery = datastore.prepare(query);
-        List<Entity> entities = preparedQuery.asList(FetchOptions.Builder.withLimit(100));
+        QueryResultList<Entity> queryResultList = preparedQuery.asQueryResultList(fetchOptions);
+        searchApiData.setCursor(queryResultList.getCursor().toWebSafeString());
 
         List<Data> result = new ArrayList<>();
-        for (Entity entity : entities) {
+        for (Entity entity : queryResultList) {
             Data data = Configuration.getInstance().dataFactory().create(searchApiData.getKind());
             data.setJSONObject(entityToJSONObject(entity, Configuration.getInstance().fieldMap().getFields(searchApiData.getKind())));
             result.add(data);

@@ -17,9 +17,9 @@ public class ListProperty<V> extends Property<List<V>> {
     }
 
     @Override
-    public List<String> createLabels(List<V> value) {
+    public List<String> createLabels(Object value) {
         List<String> result = new ArrayList<>();
-        for (V item : value) {
+        for (V item : acceptValue(value)) {
             result.add(key + ":" + item.toString());
         }
         return result;

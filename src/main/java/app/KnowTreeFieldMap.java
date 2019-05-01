@@ -1,5 +1,6 @@
 package app;
 
+import kinds.Course;
 import kinds.KNode;
 import kinds.User;
 import system.Data;
@@ -16,6 +17,7 @@ public class KnowTreeFieldMap extends FieldMap {
         super();
         registerKind(new User());
         registerKind(new KNode());
+        registerKind(new Course());
 
     }
 

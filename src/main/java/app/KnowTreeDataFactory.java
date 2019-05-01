@@ -1,5 +1,6 @@
 package app;
 
+import kinds.Course;
 import kinds.KNode;
 import kinds.Token;
 import kinds.User;
@@ -21,6 +22,8 @@ public class KnowTreeDataFactory extends DataFactory {
                 return new KNode();
             case "token" :
                 return new Token();
+            case "course" :
+                return new Course();
             default: throw new Error("Undefined kind " + kind);
         }
     }

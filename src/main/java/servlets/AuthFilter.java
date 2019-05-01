@@ -32,7 +32,8 @@ public abstract class AuthFilter extends BaseFilter {
             } else if (isRegisterPath((HttpServletRequest) request)) {
                 new RegisterServlet().doPost((HttpServletRequest) request, (HttpServletResponse) response);
             } else {
-                ErrorHandler.handle(request, response, ErrorCodes.UNAUTHORIZED_ERROR, "Please login to get a valid token");
+                request.setAttribute(RequestHeaders.CURRENT_USER, null);
+                chain.doFilter(request, response);
             }
         } else {
             AccessToken accessToken = new AccessToken(token);

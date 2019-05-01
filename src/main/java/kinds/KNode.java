@@ -9,6 +9,7 @@ import system.configurations.Configuration;
 import system.fields.CanSearch;
 import system.fields.HasId;
 import system.fields.HasTracking;
+import system.property.LongProperty;
 import system.property.Property;
 import utils.RestApiFormat;
 
@@ -16,6 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class KNode extends Data {
+    LongProperty courseId = new LongProperty("course_id");
 
     public KNode() {
         super("Knode");
@@ -56,12 +58,12 @@ public class KNode extends Data {
 
     @Override
     public Property[] fields() {
-        return new Property[] {HasUrl.url, HasUrl.title, HasId.id, CanSearch.labels};
+        return new Property[] {HasUrl.url, HasUrl.title, HasId.id, courseId, CanSearch.labels};
     }
 
     @Override
     public Property[] labelFields() {
-        return new Property[] {HasUrl.title, HasId.id};
+        return new Property[] {HasUrl.title, HasId.id, courseId};
     }
 
     @Override

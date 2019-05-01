@@ -36,6 +36,7 @@ public abstract class SearchServlet extends BaseServlet {
 
         JSONObject result = new JSONObject();
         result.put("data", filteredItems);
+        result.put("cursor", searchData.getCursor());
         resp.getWriter().write(result.toString());
     }
 }

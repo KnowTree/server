@@ -24,8 +24,8 @@ public class IntegerProperty extends Property<Integer> {
     }
 
     @Override
-    public List<String> createLabels(Integer value) {
-        return Collections.singletonList(key + ":" + value.toString());
+    public List<String> createLabels(Object value) {
+        return Collections.singletonList(key + ":" + acceptValue(value).toString());
     }
 
 }

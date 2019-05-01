@@ -32,20 +32,16 @@ public class Tools {
         JSONObject loginResult = login("root", "pppppp");
         Map<String, String> header = new HashMap<>();
         header.put(RequestHeaders.TOKEN, loginResult.getString("token"));
-        JSONObject payload = new JSONObject();
-        payload.put(HasEmail.email.key(), "root@test.com");
-        payload.put(HasName.first_name.key(), "Root");
-        payload.put(HasName.last_name.key(), "Admin");
-        payload.put(IsAdmin.is_system.key(), true);
-        payload.put(IsAdmin.is_system.key(), true);
-        JSONObject result = updateEntity(LOCALHOST, "User", loginResult.getLong(HasId.id.key()), header, payload);
+        JSONObject course = new JSONObject();
+        course.put(HasUrl.title.key(), "Course JS basic");
+        createEntity(LOCALHOST, "course", header, course);
 
 
 
     }
-    public static void createEntity(String host, String kind, JSONObject data) throws IOException {
+    public static void createEntity(String host, String kind, Map<String, String> headers,  JSONObject data) throws IOException {
         String path = String.format("%s/%s/%s/%s", host, API_PREFIX, API_VERSION, kind);
-        send("PUT", path, null, data.toString());
+        send("PUT", path, headers, data.toString());
     }
 
     public static JSONObject updateEntity(String host, String kind, Long id, Map<String, String> headers, JSONObject updateData) throws IOException {
