@@ -1,16 +1,16 @@
 import com.google.appengine.tools.remoteapi.RemoteApiInstaller;
-import datastore.DatastoreController;
+import com.ynguyen.datastore.DatastoreController;
 import kinds.User;
 import kinds.fields.HasUrl;
 import kinds.fields.IsAdmin;
 import org.json.JSONObject;
 import org.junit.Test;
-import servlets.RequestHeaders;
-import system.fields.HasCredential;
-import system.fields.HasEmail;
-import system.fields.HasId;
-import system.fields.HasName;
-import utils.Commons;
+import com.ynguyen.servlets.RequestHeaders;
+import com.ynguyen.system.fields.HasCredential;
+import com.ynguyen.system.fields.HasEmail;
+import com.ynguyen.system.fields.HasId;
+import com.ynguyen.system.fields.HasName;
+import com.ynguyen.utils.Commons;
 
 import java.io.BufferedReader;
 import java.io.IOException;

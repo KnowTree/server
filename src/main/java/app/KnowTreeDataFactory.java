@@ -4,8 +4,8 @@ import kinds.Course;
 import kinds.KNode;
 import kinds.Token;
 import kinds.User;
-import system.Data;
-import system.DataFactory;
+import com.ynguyen.system.Data;
+import com.ynguyen.system.DataFactory;
 
 public class KnowTreeDataFactory extends DataFactory {
 

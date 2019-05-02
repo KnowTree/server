@@ -16,7 +16,7 @@
 
     <filter>
         <filter-name>RestApiFormatFilter</filter-name>
-        <filter-class>servlets.RestAiFormatFilter</filter-class>
+        <filter-class>com.ynguyen.servlets.RestAiFormatFilter</filter-class>
     </filter>
 
     <filter-mapping>

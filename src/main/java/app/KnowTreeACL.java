@@ -1,17 +1,18 @@
 package app;
 
+import com.ynguyen.system.fields.HasId;
 import kinds.User;
 import org.json.JSONObject;
-import servlets.RequestHeaders;
-import system.Data;
-import system.acl.ACL;
-import system.acl.AccessToken;
-import system.configurations.Configuration;
-import system.fields.HasCredential;
-import utils.Commons;
-import utils.QueryData;
-import utils.RestApiFormat;
-import utils.SearchData;
+import com.ynguyen.servlets.RequestHeaders;
+import com.ynguyen.system.Data;
+import com.ynguyen.system.acl.ACL;
+import com.ynguyen.system.acl.AccessToken;
+import com.ynguyen.system.configurations.Configuration;
+import com.ynguyen.system.fields.HasCredential;
+import com.ynguyen.utils.Commons;
+import com.ynguyen.utils.QueryData;
+import com.ynguyen.utils.RestApiFormat;
+import com.ynguyen.utils.SearchData;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -27,7 +28,9 @@ public class KnowTreeACL implements ACL {
     public Data retrieveCurrentUserData(AccessToken accessToken) {
         Data currentUser = null;
         try {
-            currentUser = accessToken.loadUser();
+            User user = new User();
+            user.set(HasId.id, accessToken.getUserId());
+            currentUser = user.retrieve(null);
         } catch (Exception e) {
             e.printStackTrace();
         }

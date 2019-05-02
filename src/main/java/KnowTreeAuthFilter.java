@@ -1,6 +1,6 @@
 import app.KnowTreeConfiguration;
-import servlets.AuthFilter;
-import system.configurations.Configuration;
+import com.ynguyen.servlets.AuthFilter;
+import com.ynguyen.system.configurations.Configuration;
 
 public class KnowTreeAuthFilter extends AuthFilter {
     @Override

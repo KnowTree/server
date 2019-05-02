@@ -1,8 +1,8 @@
 package app;
 
-import system.configurations.SystemConfiguration;
-import datastore.DatastoreController;
-import system.DatabaseController;
+import com.ynguyen.system.configurations.SystemConfiguration;
+import com.ynguyen.datastore.DatastoreController;
+import com.ynguyen.system.DatabaseController;
 
 public class KnowTreeSystemConfiguration implements SystemConfiguration {
     DatabaseController databaseController;

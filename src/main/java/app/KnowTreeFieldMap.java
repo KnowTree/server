@@ -3,9 +3,9 @@ package app;
 import kinds.Course;
 import kinds.KNode;
 import kinds.User;
-import system.Data;
-import system.fields.FieldMap;
-import system.property.Property;
+import com.ynguyen.system.Data;
+import com.ynguyen.system.fields.FieldMap;
+import com.ynguyen.system.property.Property;
 
 public class KnowTreeFieldMap extends FieldMap {
     public static FieldMap instance = null;

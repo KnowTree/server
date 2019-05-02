@@ -1,6 +1,6 @@
 import app.KnowTreeConfiguration;
-import servlets.WebAppServlet;
-import system.configurations.Configuration;
+import com.ynguyen.servlets.WebAppServlet;
+import com.ynguyen.system.configurations.Configuration;
 
 public class KnowTreeWebAppServlet extends WebAppServlet {
     @Override

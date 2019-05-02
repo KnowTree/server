@@ -1,12 +1,12 @@
 package kinds;
 
 import org.json.JSONObject;
-import system.Data;
-import system.DatabaseController;
-import system.configurations.Configuration;
-import system.fields.HasCredential;
-import system.property.Property;
-import utils.RestApiFormat;
+import com.ynguyen.system.Data;
+import com.ynguyen.system.DatabaseController;
+import com.ynguyen.system.configurations.Configuration;
+import com.ynguyen.system.fields.HasCredential;
+import com.ynguyen.system.property.Property;
+import com.ynguyen.utils.RestApiFormat;
 
 import java.util.List;
 

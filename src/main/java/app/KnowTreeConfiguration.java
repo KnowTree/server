@@ -1,6 +1,6 @@
 package app;
 
-import system.configurations.Configuration;
+import com.ynguyen.system.configurations.Configuration;
 
 public class KnowTreeConfiguration extends Configuration {
 

@@ -2,12 +2,12 @@ package kinds;
 
 import kinds.fields.HasUrl;
 import org.json.JSONObject;
-import system.Data;
-import system.fields.CanSearch;
-import system.fields.HasTracking;
-import system.property.Property;
-import system.property.StringProperty;
-import utils.RestApiFormat;
+import com.ynguyen.system.Data;
+import com.ynguyen.system.fields.CanSearch;
+import com.ynguyen.system.fields.HasTracking;
+import com.ynguyen.system.property.Property;
+import com.ynguyen.system.property.StringProperty;
+import com.ynguyen.utils.RestApiFormat;
 
 import java.util.List;
 

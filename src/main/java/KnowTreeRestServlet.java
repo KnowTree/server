@@ -1,6 +1,6 @@
 import app.*;
-import servlets.RestServlet;
-import system.configurations.Configuration;
+import com.ynguyen.servlets.RestServlet;
+import com.ynguyen.system.configurations.Configuration;
 
 import javax.servlet.ServletException;
 

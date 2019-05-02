@@ -1,6 +1,6 @@
 import app.*;
-import servlets.SearchServlet;
-import system.configurations.Configuration;
+import com.ynguyen.servlets.SearchServlet;
+import com.ynguyen.system.configurations.Configuration;
 
 import javax.servlet.ServletException;
 

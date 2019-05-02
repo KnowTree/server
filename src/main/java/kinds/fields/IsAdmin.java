@@ -1,11 +1,11 @@
 package kinds.fields;
 
-import system.fields.HasCredential;
-import system.fields.HasEmail;
-import system.fields.HasId;
-import system.fields.HasName;
-import system.property.BooleanProperty;
-import system.property.Property;
+import com.ynguyen.system.fields.HasCredential;
+import com.ynguyen.system.fields.HasEmail;
+import com.ynguyen.system.fields.HasId;
+import com.ynguyen.system.fields.HasName;
+import com.ynguyen.system.property.BooleanProperty;
+import com.ynguyen.system.property.Property;
 
 public interface IsAdmin extends HasId, HasName, HasCredential, HasEmail {
     Property<Boolean> is_admin = new BooleanProperty("is_admin");
