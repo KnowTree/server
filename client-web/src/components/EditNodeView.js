@@ -7,8 +7,9 @@ class EditNodeView extends Form {
         return (
             <div>
                 {this.state.isNew ? '' : <p>{this.state.data.id}</p>}
-                <TextInput name="title"/>
-                <TextInput name="url"/>
+                <TextInput name="title" form={this} label="Title"/>
+                <TextInput name="url" form={this} label="URL"/>
+                <button onClick={this.submit}>Save</button>
             </div>
         )
     }

@@ -30,7 +30,13 @@ export function search (kind, values, options, successCb, errorCb) {
     const  url = "/search?kind=" + kind + "&" + params.join("&");
 
     fetch(url, option).then(res => res.json())
-        .then(items => successCb(items), error => errorCb(error));
+        .then(result => {
+            if (result.error_code) {
+                errorCb(result);
+            } else {
+                successCb(result)
+            }
+            }, error => console.log("Fetch Error : " + error));
 }
 
 export function create(kind, values, successCb, errorCb) {
@@ -46,7 +52,13 @@ export function create(kind, values, successCb, errorCb) {
     const  url = "/api/v0/" + kind;
 
     fetch(url, option).then(res => res.json())
-        .then(items => successCb(items), error => errorCb(error));
+        .then(result => {
+            if (result.error_code) {
+                errorCb(result);
+            } else {
+                successCb(result)
+            }
+        }, error => console.log("Fetch Error : " + error));
 }
 //TODO : handle error of fetch
 /*
@@ -63,7 +75,13 @@ export function update(kind, id, values, successCb, errorCb) {
     };
     const url = '/api/v0/' + kind + '/' + id;
     fetch(url, option).then(res=>res.json())
-        .then((result) => successCb(result), error => errorCb(error));
+        .then(result => {
+            if (result.error_code) {
+                errorCb(result);
+            } else {
+                successCb(result)
+            }
+        }, error => console.log("Fetch Error : " + error));
 }
 
 export function deleteEntity(kind, id, successCb, errorCb) {
@@ -76,7 +94,13 @@ export function deleteEntity(kind, id, successCb, errorCb) {
     };
     const url = '/api/v0/' + kind + "/" + id;
     fetch(url, option).then(res=>res.json())
-        .then((result) => successCb(result), error => errorCb(error));
+        .then(result => {
+            if (result.error_code) {
+                errorCb(result);
+            } else {
+                successCb(result)
+            }
+        }, error => console.log("Fetch Error : " + error));
 }
 
 /**
@@ -89,7 +113,13 @@ export function deleteEntity(kind, id, successCb, errorCb) {
  */
 export function get(kind, id, fields, successCb, errorCb) {
     const url = "/api/v0/" + kind + "/" + id + (fields != null ? "?fields=" + fields.join(",") : '');
-    fetch(url).then(res => res.json()).then(result => successCb(result), error => errorCb(error))
+    fetch(url).then(res => res.json()).then(result => {
+        if (result.error_code) {
+            errorCb(result);
+        } else {
+            successCb(result)
+        }
+    }, error => console.log("Fetch Error : " + error))
 }
 
 let token = null;

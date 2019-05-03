@@ -10,6 +10,7 @@ class AddCourseView extends CourseView {
     render() {
         return (
             <div>
+                <h3>Add Course</h3>
                 <CourseBasicInfoForm/>
             </div>
         )

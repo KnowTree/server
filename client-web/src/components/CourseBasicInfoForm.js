@@ -17,6 +17,7 @@ class CourseBasicInfoForm extends Form {
     render() {
         return (
             <div>
+                <h4>Course Infomation</h4>
                 <TextInput name="title" label="Title" form={this}/>
                 <TextInput name="description" label="Description" form={this}/>
                 {this.state.error ? <p>{this.state.error}</p> :''}

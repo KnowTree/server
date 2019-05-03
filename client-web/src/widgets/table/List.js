@@ -40,7 +40,15 @@ class List extends React.Component {
             let rows = [];
             let header = this.renderHeader();
             items.forEach((item, index) => {
-                rows.push(this.renderRow(item, index));
+                let data;
+                if (typeof item === 'string') {
+                    data = JSON.parse(item);
+                } else if (typeof item === 'object') {
+                    data = item;
+                } else {
+                    console.log("Can not parse list item of " + typeof item);
+                }
+                rows.push(this.renderRow(data, index));
             });
             let pager = this.renderPager();
             let toolbar = this.toolbar();

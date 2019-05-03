@@ -19,22 +19,19 @@ class KNodeList extends List {
 
    renderHeader() {
        return (
-           <th>
-               <td>ID</td>
-               <td>Title</td>
-           </th>
+           <h4>Knodes</h4>
        )
    }
 
    renderRow(item, index) {
        let editUrl = "/node/"+item.id;
        return (
-           <tr>
-               <td>{item.id}</td>
-               <td>{item.title}</td>
-               <td><a href={editUrl}> Edit</a><button onClick={this.deleteItem}>Delete</button></td>
+           <div>
+               <p>ID : {item.id}</p>
+               <p>Title : {item.title}</p>
+               <a href={editUrl}> Edit</a><button onClick={this.deleteItem}>Delete</button>
 
-           </tr>
+           </div>
        )
    }
 
@@ -43,7 +40,7 @@ class KNodeList extends List {
    }
 
    toolbar() {
-       const addUrl = "/courses/" + this.props.course_id + "/new_node";
+       const addUrl = "/course/" + this.props.course_id + "/new_node";
        return (
            <div>
                <a href={addUrl}>Add</a>

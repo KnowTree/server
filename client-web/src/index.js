@@ -18,7 +18,7 @@ render(
                 <Route path="/course/:course_id" component={CourseView}/>
                 <Route path="/new_course" component={AddCourseView}/>
                 <Route path="/course/:course_id/node/:node_id" component={EditNodeView}/>
-                <Route path="/course/:course_id/add_node" component={AddNodeView}/>
+                <Route path="/course/:course_id/new_node" component={AddNodeView}/>
             </div>
         </div>
     </Router>,

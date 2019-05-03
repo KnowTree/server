@@ -15,19 +15,18 @@ class CoursesView extends List {
 
     renderHeader() {
         return (
-            <th>
-                <td>ID</td>
-                <td>Title</td>
-            </th>
+            <h3>Courses</h3>
         )
     }
 
-    renderRow(item) {
+    renderRow(item, index) {
+        const editUrl = "/course/" + item.id;
         return (
-            <tr>
-                <td>{item.id}</td>
-                <td>{item.title}</td>
-            </tr>
+            <div>
+                <p>ID : {item.id}</p>
+                <p>Title : {item.title}</p>
+                <Link to={editUrl}>Edit</Link>
+            </div>
         )
     }
 
@@ -43,7 +42,7 @@ class CoursesView extends List {
     toolbar() {
         return (
             <div>
-                <a href="/new_course">Add</a>
+                <Link to="/new_course">Add</Link>
             </div>
         )
     }

@@ -13,6 +13,7 @@ class CourseView extends React.Component{
         const course_id = this.props ? (this.props.match.params.course_id || this.props.course_id) : null;
         return (
             <div>
+                <h4>Course {course_id}</h4>
                 <CourseBasicInfoForm course_id={course_id}/>
                 <KNodeList course_id={course_id}/>
             </div>
