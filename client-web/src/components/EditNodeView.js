@@ -1,6 +1,5 @@
 import React from 'react';
-import Form from "../widgets/form/Form";
-import TextInput from "../widgets/form/TextInput";
+import {Form, TextInput} from "CakeReact";
 import {get, update} from "../utils/ApiCall";
 class EditNodeView extends Form {
     render() {

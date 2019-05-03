@@ -1,5 +1,5 @@
 import React from "react";
-import List from "../widgets/table/List";
+import {List} from "CakeReact";
 import {search, deleteEntity} from "../utils/ApiCall";
 
 class KNodeList extends List {
