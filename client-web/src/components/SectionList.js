@@ -1,4 +1,4 @@
-import React from 'react'
+import {React} from 'CakeReact';
 import {Link} from 'react-router-dom';
 class SectionList extends React.Component {
     constructor(props) {

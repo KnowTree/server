@@ -32,7 +32,7 @@ public class KNode extends Data {
     public boolean canUpdate(Data currentUser, Data currentData, JSONObject updateData, RestApiFormat restApiFormat) {
         if (currentUser == null) return false;
         else {
-            return currentData.getLong(HasTracking.created_by).equals(currentUser.id());
+            return !currentData.containProperties(HasTracking.created_by) || currentData.getLong(HasTracking.created_by).equals(currentUser.id());
         }
     }
 

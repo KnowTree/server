@@ -29,6 +29,7 @@ public class Tools {
     final static String LOCALHOST = "http://localhost:8080";
 
     public static void main(String... args) throws IOException, NoSuchAlgorithmException {
+        register("root", "pppppp");
         JSONObject loginResult = login("root", "pppppp");
         Map<String, String> header = new HashMap<>();
         header.put(RequestHeaders.TOKEN, loginResult.getString("token"));

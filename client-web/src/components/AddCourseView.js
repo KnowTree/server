@@ -1,4 +1,4 @@
-import React from 'react';
+import {React} from 'CakeReact';
 import CourseView from "./CourseView";
 import CourseBasicInfoForm from "./CourseBasicInfoForm"
 

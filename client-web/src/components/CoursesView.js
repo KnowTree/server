@@ -1,6 +1,5 @@
-import React from 'react'
 import {Link} from "react-router-dom";
-import {List} from "CakeReact";
+import {React, List} from "CakeReact";
 import {search} from "../utils/ApiCall";
 
 class CoursesView extends List {

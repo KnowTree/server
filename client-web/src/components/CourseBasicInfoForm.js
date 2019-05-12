@@ -1,10 +1,10 @@
-import React from 'react';
-import {Form, TextInput} from "CakeReact";
+import {React, Form, TextInput} from "CakeReact";
 import {create, get, update} from "../utils/ApiCall";
 
 class CourseBasicInfoForm extends Form {
     constructor() {
         super();
+        this.cancel = this.cancel.bind(this);
     }
 
     doFetch() {
@@ -21,6 +21,7 @@ class CourseBasicInfoForm extends Form {
                 <TextInput name="description" label="Description" form={this}/>
                 {this.state.error ? <p>{this.state.error}</p> :''}
                 <button onClick={this.submit}>Save</button>
+                <button onClick={this.cancel}>Cancel</button>
             </div>
         )
     }
@@ -42,6 +43,10 @@ class CourseBasicInfoForm extends Form {
 
     onSubmitted() {
 
+    }
+
+    cancel() {
+        window.location("/courses");
     }
 }
 

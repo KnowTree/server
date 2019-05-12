@@ -1,4 +1,4 @@
-import React from 'react'
+import {React} from 'CakeReact';
 import {Link} from 'react-router-dom';
 import KNodeList from './KNodeList';
 import CourseBasicInfoForm from "./CourseBasicInfoForm";

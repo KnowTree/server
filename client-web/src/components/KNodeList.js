@@ -1,13 +1,20 @@
-import React from "react";
-import {List} from "CakeReact";
+import {React, List, AlertManager} from "CakeReact";
 import {search, deleteEntity} from "../utils/ApiCall";
+import {Modal} from "CakeReact";
+import AddNodeView from "./AddNodeView";
+import {withRouter, Link} from 'react-router-dom';
 
 class KNodeList extends List {
+    constructor() {
+        super();
+        this.state.showAddView = false;
+        this.openAddView = this.openAddView.bind(this);
+    }
    doFetch() {
        const option = {
            l : this.size(),
            s : this.startIndex(),
-           cursor : this.cursor()
+           cursor : this.cursor(),
        };
        const course_id = this.props.course_id;
        if (course_id) {
@@ -24,12 +31,14 @@ class KNodeList extends List {
    }
 
    renderRow(item, index) {
-       let editUrl = "/node/"+item.id;
+       let editUrl = '/course/' + this.props.course_id +  "/node/"+item.id;
+
        return (
            <div>
                <p>ID : {item.id}</p>
                <p>Title : {item.title}</p>
-               <a href={editUrl}> Edit</a><button onClick={this.deleteItem}>Delete</button>
+               <Link to={editUrl}>Edit</Link>
+               <button onClick={this.deleteItem}>Delete</button>
 
            </div>
        )
@@ -43,7 +52,11 @@ class KNodeList extends List {
        const addUrl = "/course/" + this.props.course_id + "/new_node";
        return (
            <div>
-               <a href={addUrl}>Add</a>
+               <button onClick={this.openAddView}>Add</button>
+               <Modal isOpen={this.state.showAddView}>
+                   <AddNodeView course_id={this.props.course_id}
+                                parent={this}/>
+               </Modal>
            </div>
        )
    }
@@ -54,6 +67,24 @@ class KNodeList extends List {
        deleteEntity("node", item.id, (result) => {
            this.doFetch();
        }, error => this.setState({error : error}))
+   }
+
+   openAddView() {
+        this.setState({showAddView : true});
+   }
+
+   onCancel() {
+        this.setState({showAddView : false});
+
+   }
+
+   onSubmitted(item) {
+        let currentItem = this.state.items;
+        currentItem.push(item);
+       this.setState({
+           showAddView : false,
+           items : currentItem,
+       });
    }
 }
 

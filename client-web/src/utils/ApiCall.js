@@ -31,7 +31,7 @@ export function search (kind, values, options, successCb, errorCb) {
 
     fetch(url, option).then(res => res.json())
         .then(result => {
-            if (result.error_code) {
+            if (typeof result.error_code !== 'undefined') {
                 errorCb(result);
             } else {
                 successCb(result)
@@ -53,12 +53,12 @@ export function create(kind, values, successCb, errorCb) {
 
     fetch(url, option).then(res => res.json())
         .then(result => {
-            if (result.error_code) {
+            if (typeof result.error_code !== 'undefined') {
                 errorCb(result);
             } else {
                 successCb(result)
             }
-        }, error => console.log("Fetch Error : " + error));
+        }, error => errorCb(error));
 }
 //TODO : handle error of fetch
 /*
@@ -76,7 +76,7 @@ export function update(kind, id, values, successCb, errorCb) {
     const url = '/api/v0/' + kind + '/' + id;
     fetch(url, option).then(res=>res.json())
         .then(result => {
-            if (result.error_code) {
+            if (typeof result.error_code !== 'undefined') {
                 errorCb(result);
             } else {
                 successCb(result)
@@ -95,7 +95,7 @@ export function deleteEntity(kind, id, successCb, errorCb) {
     const url = '/api/v0/' + kind + "/" + id;
     fetch(url, option).then(res=>res.json())
         .then(result => {
-            if (result.error_code) {
+            if (result.error_code != null) {
                 errorCb(result);
             } else {
                 successCb(result)
@@ -114,7 +114,7 @@ export function deleteEntity(kind, id, successCb, errorCb) {
 export function get(kind, id, fields, successCb, errorCb) {
     const url = "/api/v0/" + kind + "/" + id + (fields != null ? "?fields=" + fields.join(",") : '');
     fetch(url).then(res => res.json()).then(result => {
-        if (result.error_code) {
+        if (typeof result.error_code !== 'undefined') {
             errorCb(result);
         } else {
             successCb(result)
@@ -129,4 +129,22 @@ export function setToken(value) {
 
 export function getToken() {
     return token;
+}
+
+export function login(username, password, successCb, errorCb) {
+    const option = {
+        method : "POST",
+        body : JSON.stringify({username : username, password : password}),
+        cache : "no-cache"
+    };
+    const url = '/api/login';
+    fetch(url, option).then(res=>res.json())
+        .then(result => {
+            if (typeof result.error_code !== 'undefined') {
+                errorCb(result);
+            } else {
+                token = result.token;
+                successCb(result)
+            }
+        }, error => console.log("Fetch Error : " + error));
 }
