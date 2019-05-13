@@ -1,5 +1,6 @@
 package kinds;
 
+import com.ynguyen.system.fields.HasId;
 import kinds.fields.HasUrl;
 import org.json.JSONObject;
 import com.ynguyen.system.Data;
@@ -19,7 +20,7 @@ public class Course extends Data {
 
     @Override
     public Property[] fields() {
-        return new Property[] {HasUrl.title, author, CanSearch.labels};
+        return new Property[] {HasUrl.title, author, CanSearch.labels, HasTracking.created_by, HasId.id};
     }
 
     @Override
@@ -41,12 +42,15 @@ public class Course extends Data {
     public boolean canUpdate(Data currentUser, Data currentData, JSONObject updateData, RestApiFormat restApiFormat) {
         if (currentUser == null) return false;
         else {
-            return currentData.get(HasTracking.created_by).equals(currentUser.id());
+            return !currentData.containProperties(HasTracking.created_by) || currentData.get(HasTracking.created_by).equals(currentUser.id());
         }
     }
 
     @Override
     public boolean canCreate(Data currentUser, Data data, RestApiFormat urlParser) {
+        if (currentUser != null) {
+            currentUser.set(HasTracking.created_by, currentUser.id());
+        }
         return currentUser != null;
     }
 

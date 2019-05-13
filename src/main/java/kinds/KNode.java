@@ -38,12 +38,16 @@ public class KNode extends Data {
 
     @Override
     public boolean canCreate(Data currentUser, Data data, RestApiFormat urlParser) {
-       return currentUser != null;
+        if (currentUser != null) {
+            data.set(HasTracking.created_by, currentUser.id());
+        }
+
+        return currentUser != null;
     }
 
     @Override
     public boolean canDelete(Data currentUser, Data data, RestApiFormat urlParser) {
-        return currentUser != null && currentUser.id().equals(data.getLong(HasTracking.created_by));
+        return !data.containProperties(HasTracking.created_by) ||  currentUser != null && currentUser.id().equals(data.getLong(HasTracking.created_by));
     }
 
     public KNode setTitle(String title) {
@@ -58,7 +62,7 @@ public class KNode extends Data {
 
     @Override
     public Property[] fields() {
-        return new Property[] {HasUrl.url, HasUrl.title, HasId.id, courseId, CanSearch.labels};
+        return new Property[] {HasUrl.url, HasUrl.title, HasId.id, courseId, CanSearch.labels, HasTracking.created_by};
     }
 
     @Override

@@ -13,7 +13,7 @@ class CourseView extends React.Component{
         return (
             <div>
                 <h4>Course {course_id}</h4>
-                <CourseBasicInfoForm course_id={course_id}/>
+                <CourseBasicInfoForm course_id={course_id} isNew={false}/>
                 <KNodeList course_id={course_id}/>
             </div>
         )

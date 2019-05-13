@@ -7,85 +7,72 @@ import {withRouter, Link} from 'react-router-dom';
 class KNodeList extends List {
     constructor() {
         super();
-        this.state.showAddView = false;
-        this.openAddView = this.openAddView.bind(this);
     }
-   doFetch() {
-       const option = {
-           l : this.size(),
-           s : this.startIndex(),
-           cursor : this.cursor(),
-       };
-       const course_id = this.props.course_id;
-       if (course_id) {
-        search("Knode", {course_id : this.props.course_id}, option, (result) => this.setItems(result.data), error => this.setError(error));
-       } else {
-           this.setItems([]);
-       }
-   }
 
-   renderHeader() {
-       return (
-           <h4>Knodes</h4>
-       )
-   }
+    doFetch() {
+        const option = {
+            l: this.size(),
+            s: this.startIndex(),
+            cursor: this.cursor(),
+        };
+        const course_id = this.props.course_id;
+        if (course_id) {
+            search("Knode", {course_id: this.props.course_id}, option, (result) => this.setItems(result.data), error => this.setError(error));
+        } else {
+            this.setItems([]);
+        }
+    }
 
-   renderRow(item, index) {
-       let editUrl = '/course/' + this.props.course_id +  "/node/"+item.id;
+    renderHeader() {
+        return (
+            <div>
+                <h4>Knodes</h4>
+            </div>
+        )
+    }
 
-       return (
-           <div>
-               <p>ID : {item.id}</p>
-               <p>Title : {item.title}</p>
-               <Link to={editUrl}>Edit</Link>
-               <button onClick={this.deleteItem}>Delete</button>
+    renderRow(item, index) {
+        let editUrl = '/course/' + this.props.course_id + "/node/" + item.id;
 
-           </div>
-       )
-   }
+        return (
+            <div>
+                <p>ID : {item.id}</p>
+                <p>Title : {item.title}</p>
+                <Link to={editUrl}>Edit</Link>
+                <button onClick={this.deleteItem.bind(this ,item.id)}>Delete</button>
 
-   renderPager() {
+            </div>
+        )
+    }
 
-   }
+    renderPager() {
+        const start = this.startIndex();
+        const size = this.size();
+        const end = start + size;
+        const msg = start + " - " + end;
+        return (
+            <div>
+                {this.canPrevious() ? <button onClick={this.loadPrevious}> Prev </button> : ''}
+                {msg}
+                {this.canNext() ? <button onClick={this.loadNext}> Next </button> : ''}
+            </div>
+        )
+    }
 
-   toolbar() {
-       const addUrl = "/course/" + this.props.course_id + "/new_node";
-       return (
-           <div>
-               <button onClick={this.openAddView}>Add</button>
-               <Modal isOpen={this.state.showAddView}>
-                   <AddNodeView course_id={this.props.course_id}
-                                parent={this}/>
-               </Modal>
-           </div>
-       )
-   }
+    toolbar() {
+        const addUrl = "/course/" + this.props.course_id + "/new_node";
+        return (
+            <div>
+                <Link to={addUrl}>Add</Link>
+            </div>
+        )
+    }
 
-   deleteItem(e) {
-       const index = e.target.data;
-       const item = this.state.items[index];
-       deleteEntity("node", item.id, (result) => {
-           this.doFetch();
-       }, error => this.setState({error : error}))
-   }
-
-   openAddView() {
-        this.setState({showAddView : true});
-   }
-
-   onCancel() {
-        this.setState({showAddView : false});
-
-   }
-
-   onSubmitted(item) {
-        let currentItem = this.state.items;
-        currentItem.push(item);
-       this.setState({
-           showAddView : false,
-           items : currentItem,
-       });
-   }
+    deleteItem(id) {
+        deleteEntity("Knode", id, (result) => {
+            this.doFetch();
+        }, error => AlertManager.show('error', error.message));
+    }
 }
 
 export default KNodeList;

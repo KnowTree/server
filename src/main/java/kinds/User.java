@@ -75,7 +75,7 @@ public class User extends Data {
     @Override
     public Property[] fields() {
         return new Property[] {HasCredential.username, HasCredential.password, HasEmail.email, HasId.id,
-                HasTracking.created_date, HasName.first_name, HasName.last_name, HasName.middle_name,
+                HasTracking.created_date, HasTracking.created_by, HasName.first_name, HasName.last_name, HasName.middle_name,
         IsAdmin.is_admin, IsClient.is_client, IsAdmin.is_system, CanSearch.labels};
     }
 

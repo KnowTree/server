@@ -1,7 +1,6 @@
 import EditNodeView from "./EditNodeView";
 import {create} from "../utils/ApiCall";
-import {React} from "CakeReact";
-
+import {React, AlertManager} from "CakeReact";
 class AddNodeView extends EditNodeView {
     constructor() {
         super();
@@ -14,22 +13,12 @@ class AddNodeView extends EditNodeView {
 
     doSubmit(onSubmittedFunc) {
         let data = this.data();
-        data.course_id = this.props.course_id;
+        data.course_id = this.props.match.params.course_id;
         create("Knode", data, result => {
-            onSubmittedFunc(result);
-        }, error => {});
-    }
-
-    cancel() {
-        if (this.props.parent) {
-            this.props.parent.onCancel();
-        }
-    }
-
-    onSubmitted(data) {
-        if (this.props.parent) {
-            this.props.parent.onSubmitted(data);
-        }
+            this.cancel();
+        }, error => {
+            AlertManager.show("error", error.message);
+        });
     }
 }
 

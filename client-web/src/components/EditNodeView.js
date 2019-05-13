@@ -7,6 +7,7 @@ class EditNodeView extends Form {
     constructor(props) {
         super(props);
         this.state.redirect = null;
+        this.state.isNew = false;
     }
 
     render() {
@@ -21,7 +22,7 @@ class EditNodeView extends Form {
                     <TextInput name="title" form={this} label="Title"/>
                     <TextInput name="url" form={this} label="URL"/>
                     <HiddenInput name="course_id" form={this}/>
-                    {this.state.id ? <HiddenInput name="id" form={this}/> : ''}
+                    {!this.state.isNew ? <HiddenInput name="id" form={this}/> : ''}
                     <button onClick={this.submit}>Save</button>
                     <button onClick={this.cancel}>Cancel</button>
                 </div>
