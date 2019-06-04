@@ -53,7 +53,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>webapp</servlet-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/dashboard/*</url-pattern>
     </servlet-mapping>
 
 

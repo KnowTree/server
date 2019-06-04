@@ -11,7 +11,9 @@ class AddCourseView extends CourseView {
         return (
             <div>
                 <h3>Add Course</h3>
+                <div className="col-md-6">
                 <CourseBasicInfoForm isNew={true}/>
+                </div>
             </div>
         )
     }

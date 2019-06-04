@@ -1,4 +1,4 @@
-import {React, List, AlertManager} from "CakeReact";
+import {React, List, AlertManager, TextInput} from "CakeReact";
 import {search, deleteEntity} from "../utils/ApiCall";
 import {Modal} from "CakeReact";
 import AddNodeView from "./AddNodeView";
@@ -36,36 +36,43 @@ class KNodeList extends List {
 
         return (
             <div>
-                <p>ID : {item.id}</p>
-                <p>Title : {item.title}</p>
-                <Link to={editUrl}>Edit</Link>
-                <button onClick={this.deleteItem.bind(this ,item.id)}>Delete</button>
+                <div className="card">
+                    <div className="card-body">
+                        <div>
+                            <span>#{item.id}.</span>
+                            <span>{item.title}</span>
+                        </div>
+                        <div>
+                            <a className="btn btn-primary" href={item.url}> Read </a>
+                            <Link to={editUrl}>Edit</Link>
+                            <button className="btn btn-outline-secondary" onClick={this.deleteItem.bind(this ,item.id)}>Delete</button>
 
+                        </div>
+
+                    </div>
+                </div>
             </div>
         )
     }
 
-    renderPager() {
-        const start = this.startIndex();
-        const size = this.size();
-        const end = start + size;
-        const msg = start + " - " + end;
-        return (
-            <div>
-                {this.canPrevious() ? <button onClick={this.loadPrevious}> Prev </button> : ''}
-                {msg}
-                {this.canNext() ? <button onClick={this.loadNext}> Next </button> : ''}
-            </div>
-        )
-    }
-
-    toolbar() {
+    toolbarItems() {
         const addUrl = "/course/" + this.props.course_id + "/new_node";
         return (
             <div>
-                <Link to={addUrl}>Add</Link>
+                <Link className="btn btn-primary" to={addUrl}>Add</Link>
             </div>
         )
+    }
+
+    doSearch(value) {
+        const parts = value.split(",");
+        search("Knode", {labels : parts}, null,
+            (result) => {
+                const data = result.data;
+                this.setState({items : data});
+            }, (error) => {
+                AlertManager.show("error", error.message)
+            })
     }
 
     deleteItem(id) {

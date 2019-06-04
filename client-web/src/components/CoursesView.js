@@ -32,21 +32,17 @@ class CoursesView extends List {
         )
     }
 
-    renderPager() {
+
+    toolbarItems() {
         return (
             <div>
-                {this.canPrevious() ? <button onClick={this.loadNext}>Previous</button> : <button disabled={true}>Previous</button>}
-                {this.canNext() ? <button onClick={this.loadPrevious}>Next</button> : <button disabled={true}>Next</button>}
+                <Link className="btn btn-primary" to="/new_course">Add</Link>
             </div>
         )
     }
 
-    toolbar() {
-        return (
-            <div>
-                <Link to="/new_course">Add</Link>
-            </div>
-        )
+    doSearch(value) {
+
     }
 
     deleteItem(id) {

@@ -7,6 +7,8 @@
         </include>
         <include path="/**.js">
         </include>
+        <include path="/**.css">
+        </include>
     </static-files>
 
 

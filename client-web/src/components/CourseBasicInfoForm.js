@@ -1,4 +1,4 @@
-import {React, Form, TextInput, AlertManager, HiddenInput} from "CakeReact";
+import {React, Form, TextInput, MultiSelectInput, NumberInput, AlertManager, HiddenInput} from "CakeReact";
 import {create, get, update} from "../utils/ApiCall";
 import {Redirect, Link} from 'react-router-dom';
 
@@ -25,10 +25,12 @@ class CourseBasicInfoForm extends Form {
                     <h4>Course Infomation</h4>
                     <TextInput name="title" label="Title" form={this}/>
                     <TextInput name="author" label="Author" form={this}/>
+                    <MultiSelectInput name="categories" label="Categories" form={this}/>
+                    <NumberInput name="price" label="Price" form={this}/>
                     {this.props.isNew ? '' :<HiddenInput name="id" form={this}/>}
                     {this.state.error ? <p>{this.state.error}</p> : ''}
-                    <button onClick={this.submit}>Save</button>
-                    <Link to="/courses">Cancel</Link>
+                    <button role="form-submit-button" onClick={this.submit}>Save</button>
+                    <Link  role="form-cancel-button" to="/courses">Cancel</Link>
                 </div>
             )
         }

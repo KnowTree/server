@@ -1,4 +1,4 @@
-import {React, Form, TextInput, HiddenInput} from "CakeReact";
+import {React, Form, TextInput, HiddenInput, NumberInput} from "CakeReact";
 import {get, update} from "../utils/ApiCall";
 import {Redirect} from 'react-router';
 import {AlertManager} from 'CakeReact';
@@ -21,6 +21,7 @@ class EditNodeView extends Form {
                     {this.state.isNew ? '' : <p>{this.state.data.id}</p>}
                     <TextInput name="title" form={this} label="Title"/>
                     <TextInput name="url" form={this} label="URL"/>
+                    <NumberInput name="order" label="Order" form={this}/>
                     <HiddenInput name="course_id" form={this}/>
                     {!this.state.isNew ? <HiddenInput name="id" form={this}/> : ''}
                     <button onClick={this.submit}>Save</button>

@@ -1,0 +1,88 @@
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+#_content {
+  @extend .container
+}
+
+[role="alert-info"] {
+  @extend .alert;
+  @extend .alert-primary
+}
+
+[role="alert-warning"] {
+  @extend .alert;
+  @extend .alert-warning
+}
+
+[role="alert-error"] {
+  @extend .alert;
+  @extend .alert-danger;
+}
+
+[role="close-alert"] {
+  @extend .close
+}
+
+[role="form-group"] {
+  @extend .form-group
+}
+
+[role="form-submit-button"] {
+  @extend .btn;
+  @extend .btn-primary;
+}
+
+[role="form-cancel-button"] {
+  @extend .btn;
+  @extend .btn-outline-primary;
+}
+
+[role="text-input"] {
+  @extend .form-control
+}
+
+[role="number-input"] {
+  @extend .form-control
+}
+
+[role="text-input-helptext"] {
+  @extend .form-text;
+  @extend .text-muted;
+}
+
+[role="list-containier"] {
+  @extend .card
+}
+
+[role="form-container"] {
+  @extend .card
+}
+
+[role="toolbar"] {
+
+}
+
+[role="pager"] {
+  @extend .pagination
+}
+
+[role="pager-next"] {
+  @extend .page-item
+}
+
+[role="pager-previous"] {
+  @extend .page-item
+}
+
+[role="search"] {
+  @extend .form-group
+}
+
+[role="search-input"] {
+  @extend .form-control
+}
+
+[role="search-button"] {
+  @extend .btn;
+  @extend .btn-primary;
+}
