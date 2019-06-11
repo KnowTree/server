@@ -13,7 +13,7 @@ class AddNodeView extends EditNodeView {
 
     doSubmit(onSubmittedFunc) {
         let data = this.data();
-        data.course_id = this.props.match.params.course_id;
+        data.course_id = this.props.params.course_id;
         create("Knode", data, result => {
             this.cancel();
         }, error => {

@@ -22,6 +22,7 @@ Contributor have main role in constructing this mind map.
 - Each knowledge usually have many resources, we let reader rating them.
 - Engage user by show them their knowledge coverage and regularly test them or remind them ?
 - Engage user to summarize knowledge ?
+=> Provide a routine to learn something based on the map
 
 II. Usage specifications
 

@@ -2,11 +2,12 @@ import {React, List, AlertManager, TextInput} from "CakeReact";
 import {search, deleteEntity} from "../utils/ApiCall";
 import {Modal} from "CakeReact";
 import AddNodeView from "./AddNodeView";
-import {withRouter, Link} from 'react-router-dom';
+import {BrowserUtils} from "CakeReact";
 
 class KNodeList extends List {
     constructor() {
         super();
+        this.goToAddNode = this.goToAddNode.bind(this);
     }
 
     doFetch() {
@@ -44,7 +45,7 @@ class KNodeList extends List {
                         </div>
                         <div>
                             <a className="btn btn-primary" href={item.url}> Read </a>
-                            <Link to={editUrl}>Edit</Link>
+                            <a onClick={this.goToEditNode(editUrl)}>Edit</a>
                             <button className="btn btn-outline-secondary" onClick={this.deleteItem.bind(this ,item.id)}>Delete</button>
 
                         </div>
@@ -55,11 +56,17 @@ class KNodeList extends List {
         )
     }
 
+    goToEditNode(url) {
+        return () => {
+            BrowserUtils.changeUrlAndEmitEvent(url);
+        }
+    }
+
     toolbarItems() {
         const addUrl = "/course/" + this.props.course_id + "/new_node";
         return (
             <div>
-                <Link className="btn btn-primary" to={addUrl}>Add</Link>
+                <a className="btn btn-primary" onClick={this.goToAddNode}>Add</a>
             </div>
         )
     }
@@ -79,6 +86,10 @@ class KNodeList extends List {
         deleteEntity("Knode", id, (result) => {
             this.doFetch();
         }, error => AlertManager.show('error', error.message));
+    }
+
+    goToAddNode() {
+        BrowserUtils.changeUrlAndEmitEvent("/course/" + this.props.course_id + "/new_node");
     }
 }
 

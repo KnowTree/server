@@ -1,7 +1,12 @@
-import {React, List, AlertManager} from "CakeReact";
+import {React, List, AlertManager, BrowserUtils} from "CakeReact";
 import {search, deleteEntity} from "../utils/ApiCall";
 
 class CoursesView extends List {
+    constructor(props) {
+        super(props);
+        this.goToNewCourse = this.goToNewCourse.bind(this);
+    }
+
     doFetch() {
         const option = {
             l : this.size(),
@@ -35,7 +40,7 @@ class CoursesView extends List {
     toolbarItems() {
         return (
             <div>
-                <button className="btn btn-primary">Add</button>
+                <button onClick={this.goToNewCourse} className="btn btn-primary">Add</button>
             </div>
         )
     }
@@ -48,6 +53,10 @@ class CoursesView extends List {
         deleteEntity("Course", id,
             (result) => this.doFetch(),
                 error => AlertManager.show('error', error.message));
+    }
+
+    goToNewCourse() {
+        BrowserUtils.changeUrlAndEmitEvent("/new_course");
     }
 }
 

@@ -1,5 +1,6 @@
 import {React, Form, TextInput, MultiSelectInput, NumberInput, AlertManager, HiddenInput} from "CakeReact";
 import {create, get, update} from "../utils/ApiCall";
+import {BrowserUtils} from "CakeReact";
 
 class CourseBasicInfoForm extends Form {
     constructor() {
@@ -14,25 +15,19 @@ class CourseBasicInfoForm extends Form {
     }
 
     render() {
-        if (this.state.redirect) {
-            return (
-                <div></div>
-            )
-        } else {
-            return (
-                <div>
-                    <h4>Course Infomation</h4>
-                    <TextInput name="title" label="Title" form={this}/>
-                    <TextInput name="author" label="Author" form={this}/>
-                    <MultiSelectInput name="categories" label="Categories" form={this}/>
-                    <NumberInput name="price" label="Price" form={this}/>
-                    {this.props.isNew ? '' :<HiddenInput name="id" form={this}/>}
-                    {this.state.error ? <p>{this.state.error}</p> : ''}
-                    <button role="form-submit-button" onClick={this.submit}>Save</button>
-                    <button  role="form-cancel-button">Cancel</button>
-                </div>
-            )
-        }
+        return (
+            <div>
+                <h4>Course Infomation</h4>
+                <TextInput name="title" label="Title" form={this}/>
+                <TextInput name="author" label="Author" form={this}/>
+                <MultiSelectInput name="categories" label="Categories" form={this}/>
+                <NumberInput name="price" label="Price" form={this}/>
+                {this.props.isNew ? '' :<HiddenInput name="id" form={this}/>}
+                {this.state.error ? <p>{this.state.error}</p> : ''}
+                <button role="form-submit-button" onClick={this.submit}>Save</button>
+                <button  role="form-cancel-button" onClick={this.cancel}>Cancel</button>
+            </div>
+        )
     }
 
     doSubmit() {
@@ -45,9 +40,13 @@ class CourseBasicInfoForm extends Form {
             create("Course", values, (result) => {
                 const {id} = result;
                 const path = "/course/" + id;
-                this.setState({redirect : path});
+                BrowserUtils.changeUrlAndEmitEvent(path);
             }, error => AlertManager.show('error', error.message))
         }
+    }
+
+    cancel() {
+        BrowserUtils.back();
     }
 }
 

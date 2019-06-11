@@ -1,19 +1,17 @@
-import {React, TextInput, Form, AlertManager} from "CakeReact";
+import {React, TextInput, Form, AlertManager, BrowserUtils} from "CakeReact";
 import {create, register} from "../utils/ApiCall";
-import {Redirect} from 'react-router';
 
 class RegisterForm extends Form {
     constructor(props) {
         super(props);
         this.state.error = null;
-        this.state.success =false;
 
     }
 
     render() {
         return (
             <div>
-                {!this.state.success ? this.renderInputs() : (<Redirect to="/login"/>) }
+                { this.renderInputs() }
             </div>
         );
     }
@@ -34,9 +32,7 @@ class RegisterForm extends Form {
         const values = this.data();
         register(values.username, values.password, (result) => {
             AlertManager.show("info", "Your account has been created")
-            this.setState({
-                success : true
-            })
+            BrowserUtils.changeUrlAndEmitEvent("/login");
         }, (error) => {
             this.setState({
                 error : error.message

@@ -128,6 +128,7 @@ export function setToken(value) {
 }
 
 export function getToken() {
+
     return token;
 }
 
