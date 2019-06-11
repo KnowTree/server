@@ -1,6 +1,5 @@
 import {React, Form, TextInput, MultiSelectInput, NumberInput, AlertManager, HiddenInput} from "CakeReact";
 import {create, get, update} from "../utils/ApiCall";
-import {Redirect, Link} from 'react-router-dom';
 
 class CourseBasicInfoForm extends Form {
     constructor() {
@@ -17,7 +16,7 @@ class CourseBasicInfoForm extends Form {
     render() {
         if (this.state.redirect) {
             return (
-                <Redirect to={this.state.redirect}/>
+                <div></div>
             )
         } else {
             return (
@@ -30,7 +29,7 @@ class CourseBasicInfoForm extends Form {
                     {this.props.isNew ? '' :<HiddenInput name="id" form={this}/>}
                     {this.state.error ? <p>{this.state.error}</p> : ''}
                     <button role="form-submit-button" onClick={this.submit}>Save</button>
-                    <Link  role="form-cancel-button" to="/courses">Cancel</Link>
+                    <button  role="form-cancel-button">Cancel</button>
                 </div>
             )
         }

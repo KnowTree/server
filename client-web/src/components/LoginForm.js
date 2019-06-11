@@ -36,11 +36,13 @@ class LoginForm extends Form {
 
     renderInputs() {
         return (
-            <div role="form-froup">
+            <div className="center-box">
+            <div role="form-group">
                 <TextInput name="username" label="Username" form={this} />
                 <TextInput name="password" label="Password" form={this} />
                 <button onClick={this.submit} className="btn btn-outline-primary">Login</button>
                 <NavLink to="/register">Register</NavLink>
+            </div>
             </div>
     )
     }

@@ -1,4 +1,3 @@
-import {Link} from "react-router-dom";
 import {React, List, AlertManager} from "CakeReact";
 import {search, deleteEntity} from "../utils/ApiCall";
 
@@ -26,7 +25,7 @@ class CoursesView extends List {
             <div>
                 <p>ID : {item.id}</p>
                 <p>Title : {item.title}</p>
-                <Link to={editUrl}>Edit</Link>
+                <button >Edit</button>
                 <button onClick={this.deleteItem.bind(this, item.id)}>Delete</button>
             </div>
         )
@@ -36,7 +35,7 @@ class CoursesView extends List {
     toolbarItems() {
         return (
             <div>
-                <Link className="btn btn-primary" to="/new_course">Add</Link>
+                <button className="btn btn-primary">Add</button>
             </div>
         )
     }

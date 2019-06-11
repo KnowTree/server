@@ -86,3 +86,55 @@
   @extend .btn;
   @extend .btn-primary;
 }
+
+.center-box {
+  position:absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+  z-index:99;
+  margin:auto;
+  height:200px;
+  width:200px;
+  border:1px solid #000;
+  text-align:center;
+  line-height:200px;
+}
+
+[role="nav-wrapper"] {
+  @extend .navbar;
+  @extend .navbar-expand-lg;
+  @extend .navbar-light;
+  @extend .bg-light
+}
+
+[role="nav-wrapper"] .a {
+  @extend .navbar-brand
+}
+
+[role="nav-menu"] {
+  @extend .collapse;
+  @extend .navbar-collapse
+}
+
+[role="nav-menu"] ul {
+  @extend .navbar-nav;
+  @extend .mr-auto;
+  @extend .mt-2;
+  @extend .mt-lg-0;
+}
+
+[role="nav-item-active"] {
+  @extend .nav-item;
+  @extend .active
+}
+
+[role="nav-item-inactive"] {
+  @extend .nav-item;
+}
+
+[role="nav-button"] {
+  @extend .nav-link;
+
+}
