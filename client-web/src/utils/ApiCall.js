@@ -148,3 +148,24 @@ export function login(username, password, successCb, errorCb) {
             }
         }, error => console.log("Fetch Error : " + error));
 }
+
+export function logout() {
+
+}
+
+export function register(username, password, succesCb, errorCb) {
+    const option = {
+        method : "PUT",
+        body : JSON.stringify({username : username, password : password}),
+        cache : "no-cache"
+    };
+    const url = '/api/register';
+    fetch(url, option).then(res=>res.json())
+        .then(result => {
+            if (typeof result.error_code !== 'undefined') {
+                errorCb(result);
+            } else {
+                successCb(result)
+            }
+        }, error => console.log("Fetch Error : " + error));
+}
