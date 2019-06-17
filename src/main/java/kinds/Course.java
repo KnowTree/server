@@ -1,6 +1,8 @@
 package kinds;
 
 import com.ynguyen.system.fields.HasId;
+import com.ynguyen.utils.Commons;
+import kinds.fields.CommonFields;
 import kinds.fields.HasUrl;
 import org.json.JSONObject;
 import com.ynguyen.system.Data;
@@ -13,19 +15,22 @@ import com.ynguyen.utils.RestApiFormat;
 import java.util.List;
 
 public class Course extends Data {
-    Property<String> author = new StringProperty("author");
     public Course() {
         super("Course");
     }
 
     @Override
     public Property[] fields() {
-        return new Property[] {HasUrl.title, author, CanSearch.labels, HasTracking.created_by, HasId.id};
+        return new Property[] {
+                HasId.id, CanSearch.labels,
+                HasUrl.title, CommonFields.author,
+                HasTracking.created_by,
+                CommonFields.categories, CommonFields.price};
     }
 
     @Override
     public Property[] labelFields() {
-        return new Property[] {HasUrl.title, author};
+        return new Property[] {HasUrl.title, CommonFields.author, CommonFields.categories};
     }
 
     @Override

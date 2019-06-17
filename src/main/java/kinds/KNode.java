@@ -1,5 +1,6 @@
 package kinds;
 
+import kinds.fields.CommonFields;
 import kinds.fields.HasUrl;
 import kinds.fields.IsAdmin;
 import org.json.JSONObject;
@@ -62,16 +63,19 @@ public class KNode extends Data {
 
     @Override
     public Property[] fields() {
-        return new Property[] {HasUrl.url, HasUrl.title, HasId.id, courseId, CanSearch.labels, HasTracking.created_by};
+        return new Property[] {HasId.id,
+                HasUrl.url, HasUrl.title, courseId,
+                CommonFields.order,
+                CanSearch.labels, HasTracking.created_by};
     }
 
     @Override
     public Property[] labelFields() {
-        return new Property[] {HasUrl.title, HasId.id, courseId};
+        return new Property[] {HasUrl.title, HasId.id};
     }
 
     @Override
     public List<String> addCustomLabels() {
-        return null;
+        return Arrays.asList("course:" + get(courseId));
     }
 }
