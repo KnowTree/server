@@ -1,7 +1,15 @@
 @import "../node_modules/bootstrap/scss/bootstrap";
 
+body {
+  background-color: whitesmoke;
+}
 #_content {
-  @extend .container
+  @extend .container;
+  margin-top: 20px;
+}
+
+input:focus {
+  outline : none;
 }
 
 [role="alert-info"] {
@@ -38,11 +46,14 @@
 }
 
 [role="text-input"] {
-  @extend .form-control
+  @extend .form-control;
+  @extend .form-control-sm
 }
 
 [role="number-input"] {
-  @extend .form-control
+  @extend .form-control;
+  @extend .form-control-sm
+
 }
 
 [role="text-input-helptext"] {
@@ -62,8 +73,12 @@
 
 }
 
+[role="list_pager"] {
+  @extend .mx-auto
+}
+
 [role="pager"] {
-  @extend .pagination
+  @extend .pagination;
 }
 
 [role="pager-next"] {
@@ -79,34 +94,20 @@
 }
 
 [role="search-input"] {
-  @extend .form-control
-}
-
-[role="search-button"] {
-  @extend .btn;
-  @extend .btn-primary;
+  border : none;
+  box-shadow:none;
 }
 
 .center-box {
-  position:absolute;
-  top:0;
-  right:0;
-  bottom:0;
-  left:0;
-  z-index:99;
-  margin:auto;
-  height:600px;
-  width:800px;
-  border:1px solid #000;
-  text-align:center;
-  line-height:200px;
+  @extend .col-md-6 ;
+  @extend .mx-auto
 }
 
 [role="nav-wrapper"] {
   @extend .navbar;
   @extend .navbar-expand-lg;
-  @extend .navbar-light;
-  @extend .bg-light
+  @extend .navbar-dark;
+  @extend .bg-dark;
 }
 
 [role="nav-wrapper"] .a {
@@ -138,3 +139,66 @@
   @extend .nav-link;
 
 }
+
+.pad-1 {
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+[role="page-next"] {
+  @extend .btn;
+  @extend .btn-light
+}
+
+[role="page-previous"] {
+  @extend .btn;
+  @extend .btn-light
+}
+
+[role="search-wrapper"] {
+  @extend .input-group;
+}
+
+[role="search-input"] {
+  @extend .form-control;
+  border : none;
+}
+
+[role="search-button"] {
+  @extend .input-group-append;
+}
+
+[role="search-button"] button {
+  @extend .btn;
+  @extend .btn-outline-secondary;
+}
+
+[role="list-container"] {
+  @extend .card;
+  @extend .card-body;
+}
+
+[role="list_toolbar"] {
+  @extend .border-bottom;
+  @extend .pad-1
+}
+
+[role="list_searcher"] {
+  @extend .pad-1;
+
+}
+
+[role="list_rows"] {
+  @extend .row;
+  @extend .border-bottom;
+  @extend .pad-1;
+  padding-left: 1em;
+  padding-right: 1em;
+
+}
+
+[role="list_pager"] {
+  @extend .pad-1
+
+}
+

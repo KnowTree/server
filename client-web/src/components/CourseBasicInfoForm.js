@@ -16,16 +16,18 @@ class CourseBasicInfoForm extends Form {
 
     render() {
         return (
-            <div>
-                <h4>Course Infomation</h4>
-                <TextInput name="title" label="Title" form={this}/>
-                <TextInput name="author" label="Author" form={this}/>
-                <MultiSelectInput name="categories" label="Categories" form={this}/>
-                <NumberInput name="price" label="Price" form={this}/>
-                {this.props.isNew ? '' :<HiddenInput name="id" form={this}/>}
-                {this.state.error ? <p>{this.state.error}</p> : ''}
-                <button role="form-submit-button" onClick={this.submit}>Save</button>
-                <button  role="form-cancel-button" onClick={this.cancel}>Cancel</button>
+            <div className="card">
+                <div className="card-body">
+                    <h5>Course Information</h5>
+                    <TextInput name="title" label="Title" form={this}/>
+                    <TextInput name="author" label="Author" form={this}/>
+                    <MultiSelectInput name="categories" label="Categories" form={this}/>
+                    <NumberInput name="price" label="Price" form={this}/>
+                    {this.props.isNew ? '' :<HiddenInput name="id" form={this}/>}
+                    {this.state.error ? <p>{this.state.error}</p> : ''}
+                    <button role="form-submit-button" onClick={this.submit}>Save</button>
+                    <button  role="form-cancel-button" onClick={this.cancel}>Cancel</button>
+                </div>
             </div>
         )
     }
@@ -46,7 +48,7 @@ class CourseBasicInfoForm extends Form {
     }
 
     cancel() {
-        BrowserUtils.back();
+        BrowserUtils.changeUrlAndEmitEvent("/courses");
     }
 }
 

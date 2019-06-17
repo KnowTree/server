@@ -18,7 +18,7 @@ class RegisterForm extends Form {
 
     renderInputs() {
         return (
-            <div className="center-box">
+            <div className="card center-box">
             <div role="form-group">
                 <TextInput name="username" label="Username" form={this}/>
                 <TextInput name="password" label="Password" form={this}/>

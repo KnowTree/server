@@ -5,6 +5,8 @@ class CoursesView extends List {
     constructor(props) {
         super(props);
         this.goToNewCourse = this.goToNewCourse.bind(this);
+        this.deleteItem = this.deleteItem.bind(this);
+        this.goToEditCourse = this.goToEditCourse.bind(this);
     }
 
     doFetch() {
@@ -20,18 +22,21 @@ class CoursesView extends List {
 
     renderHeader() {
         return (
-            <h3>Courses</h3>
+            <h5>Courses</h5>
         )
     }
 
     renderRow(item, index) {
-        const editUrl = "/course/" + item.id;
         return (
-            <div>
-                <p>ID : {item.id}</p>
-                <p>Title : {item.title}</p>
-                <button >Edit</button>
-                <button onClick={this.deleteItem.bind(this, item.id)}>Delete</button>
+            <div className="card col-md-3 ml-1 mr-1 mt-1 mb-1">
+                <div className="card-body">
+                    <h5>{item.title}</h5>
+                    <p>#{item.id}</p>
+                </div>
+                <div className="card-body">
+                    <a className="card-link" onClick={this.goToEditCourse} data={item.id}>Edit</a>
+                    <a className="card-link" onClick={this.deleteItem} data={item.id}>Delete</a>
+                </div>
             </div>
         )
     }
@@ -40,7 +45,7 @@ class CoursesView extends List {
     toolbarItems() {
         return (
             <div>
-                <button onClick={this.goToNewCourse} className="btn btn-primary">Add</button>
+                <button onClick={this.goToNewCourse} className="btn btn-secondary btn-sm">Add</button>
             </div>
         )
     }
@@ -49,7 +54,8 @@ class CoursesView extends List {
 
     }
 
-    deleteItem(id) {
+    deleteItem(e) {
+        const id = e.target.getAttribute("data");
         deleteEntity("Course", id,
             (result) => this.doFetch(),
                 error => AlertManager.show('error', error.message));
@@ -57,6 +63,12 @@ class CoursesView extends List {
 
     goToNewCourse() {
         BrowserUtils.changeUrlAndEmitEvent("/new_course");
+    }
+
+    goToEditCourse(e) {
+        const id = e.target.getAttribute("data");
+        const url = "/course/" + id;
+        BrowserUtils.changeUrlAndEmitEvent(url);
     }
 }
 

@@ -46,6 +46,8 @@ class App extends DefaultApp {
 
         ]);
         this.setBaseName("/dashboard");
+        this.addState("appName", "KnowTree");
+        this.addState("icon", "");
 
     }
 

@@ -21,7 +21,7 @@ class LoginForm extends Form {
 
     render() {
         return (
-            <div>
+            <div className="card center-box">
                 {this.renderInputs()}
 
                 {this.state.error ? ( <div role="alert-error">

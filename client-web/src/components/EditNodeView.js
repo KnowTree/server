@@ -10,17 +10,18 @@ class EditNodeView extends Form {
     }
 
     render() {
-
         return (
-            <div>
-                {this.state.isNew ? '' : <p>{this.state.data.id}</p>}
-                <TextInput name="title" form={this} label="Title"/>
-                <TextInput name="url" form={this} label="URL"/>
-                <NumberInput name="order" label="Order" form={this}/>
-                <HiddenInput name="course_id" form={this}/>
-                {!this.state.isNew ? <HiddenInput name="id" form={this}/> : ''}
-                <button onClick={this.submit}>Save</button>
-                <button onClick={this.cancel}>Cancel</button>
+            <div className="card center-box">
+                <div className="card-body">
+                    {this.state.isNew ? '' : <p>{this.state.data.id}</p>}
+                    <TextInput name="title" form={this} label="Title"/>
+                    <TextInput name="url" form={this} label="URL"/>
+                    <NumberInput name="order" label="Order" form={this}/>
+                    <HiddenInput name="course_id" form={this}/>
+                    {!this.state.isNew ? <HiddenInput name="id" form={this}/> : ''}
+                    <button onClick={this.submit}>Save</button>
+                    <button onClick={this.cancel}>Cancel</button>
+                </div>
             </div>
         )
 

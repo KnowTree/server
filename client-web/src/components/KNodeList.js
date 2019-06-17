@@ -8,6 +8,8 @@ class KNodeList extends List {
     constructor() {
         super();
         this.goToAddNode = this.goToAddNode.bind(this);
+        this.goToEditNode = this.goToEditNode.bind(this);
+        this.deleteItem = this.deleteItem.bind(this);
     }
 
     doFetch() {
@@ -27,46 +29,40 @@ class KNodeList extends List {
     renderHeader() {
         return (
             <div>
-                <h4>Knodes</h4>
+                <h5>Knodes</h5>
             </div>
         )
     }
 
     renderRow(item, index) {
-        let editUrl = '/course/' + this.props.course_id + "/node/" + item.id;
-
         return (
-            <div>
+            <div className="ml-1 mr-1 mt-1 mb-1">
                 <div className="card">
                     <div className="card-body">
-                        <div>
-                            <span>#{item.id}.</span>
-                            <span>{item.title}</span>
-                        </div>
-                        <div>
-                            <a className="btn btn-primary" href={item.url}> Read </a>
-                            <a onClick={this.goToEditNode(editUrl)}>Edit</a>
-                            <button className="btn btn-outline-secondary" onClick={this.deleteItem.bind(this ,item.id)}>Delete</button>
-
-                        </div>
-
+                        <h6>#{item.id}. {item.title}</h6>
+                    </div>
+                    <div className="card-body">
+                        <a className="card-link" href={item.url}> Read </a>
+                        <a className="card-link" onClick={this.goToEditNode} data={item.id}>Edit</a>
+                        <a className="card-link" onClick={this.deleteItem} data={item.id}>Delete</a>
                     </div>
                 </div>
             </div>
         )
     }
 
-    goToEditNode(url) {
-        return () => {
-            BrowserUtils.changeUrlAndEmitEvent(url);
-        }
+    goToEditNode(e) {
+        const id = e.target.getAttribute("data");
+        let editUrl = '/course/' + this.props.course_id + "/node/" + id;
+        BrowserUtils.changeUrlAndEmitEvent(editUrl);
+
     }
 
     toolbarItems() {
         const addUrl = "/course/" + this.props.course_id + "/new_node";
         return (
             <div>
-                <a className="btn btn-primary" onClick={this.goToAddNode}>Add</a>
+                <a className="btn btn-secondary btn-sm" onClick={this.goToAddNode}>Add</a>
             </div>
         )
     }
@@ -82,7 +78,8 @@ class KNodeList extends List {
             })
     }
 
-    deleteItem(id) {
+    deleteItem(e) {
+        const id = e.target.getAttribute("data");
         deleteEntity("Knode", id, (result) => {
             this.doFetch();
         }, error => AlertManager.show('error', error.message));

@@ -9,11 +9,9 @@ class AddCourseView extends CourseView {
 
     render() {
         return (
-            <div>
-                <h3>Add Course</h3>
-                <div className="col-md-6">
+            <div className="center-box card">
+                <h5>Add Course</h5>
                 <CourseBasicInfoForm isNew={true}/>
-                </div>
             </div>
         )
     }
