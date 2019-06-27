@@ -56,5 +56,15 @@
         <url-pattern>/dashboard/*</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>googlesignintoken</servlet-name>
+        <servlet-class>googleapis.GoogleTokenSignInServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>googlesignintoken</servlet-name>
+        <url-pattern>/api/googleSignInToken</url-pattern>
+    </servlet-mapping>
+
 
 </web-app>
