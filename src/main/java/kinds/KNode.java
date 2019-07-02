@@ -76,6 +76,6 @@ public class KNode extends Data {
 
     @Override
     public List<String> addCustomLabels() {
-        return Arrays.asList("course:" + get(courseId));
+        return Arrays.asList("course_id:" + get(courseId));
     }
 }
