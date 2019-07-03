@@ -62,6 +62,7 @@ class App extends DefaultApp {
             });*/
             setToken(api_token);
         } else {
+            //inform require admin role
         }
     }
 
